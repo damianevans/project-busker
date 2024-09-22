@@ -100,7 +100,7 @@ except:
 app = wx.App(False)
 print("Starting Audio...")
 # set up pyo input and effectgs
-server = pyo.Server().boot()
+server = pyo.Server(nchnls=NCHNLS).boot()
 server.start()
 
 # Start the UI
@@ -126,11 +126,11 @@ wah      = pyo.ButBP(wet, freq=wahfq, q=30)
 mix       = pyo.Mix([dry,wet,wah]).out()
 
 while True:
-    dry.mul         = 1 - SLIDERS["Wah"]
-    wet.mul         = SLIDERS["Wah"]
-    delay.delay     = SLIDERS["Delay"]
-    reverb.size     = SLIDERS["Reverb"]
-    distort.drive   =  SLIDERS["Distort"]**0.05
-    wah.mul         = SLIDERS["Wah"]*30
-    eq.mul          = [ SLIDERS["Treble"], SLIDERS["Mid"], SLIDERS["Bass"]*2]
+ #   dry.mul         = 1 - SLIDERS["Wah"]
+ #   wet.mul         = SLIDERS["Wah"]
+ #   delay.delay     = SLIDERS["Delay"]
+ #   reverb.size     = SLIDERS["Reverb"]
+ #   distort.drive   =  SLIDERS["Distort"]**0.05
+ #   wah.mul         = SLIDERS["Wah"]*30
+ #   eq.mul          = [ SLIDERS["Treble"], SLIDERS["Mid"], SLIDERS["Bass"]*2]
     server.setAmp(pow(10, SLIDERS["Gain"] * 0.05))
