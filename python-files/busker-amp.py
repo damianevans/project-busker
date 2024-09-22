@@ -100,7 +100,10 @@ except:
 app = wx.App(False)
 print("Starting Audio...")
 # set up pyo input and effectgs
-server = pyo.Server(nchnls=NCHNLS).boot()
+server = pyo.Server(nchnls=NCHNLS)
+server.setOutputDevice(0)
+server.setInputDevice(0)
+server.boot()
 server.start()
 
 # Start the UI
