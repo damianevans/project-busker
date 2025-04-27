@@ -21,12 +21,31 @@ wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 mix       = pyo64.Mix([dry,wet,wah]).out()
 amplitude = None
+leds_on = False
 eq = {'bass': 1., 'mid': 1., 'treb': 1.}
 fx = {'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
 data_lock = threading.Lock()
+max_RMS = 0
+VU_factor = 1
 vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 17)
 
+
+
+def RMS_meter_callback(*args):
+    global max_RMS, VU_factor, meter
+    # set VU max to highest value, but back off highest value over time
+    if args[0] > max_RMS:
+        max_RMS = args[0]
+        VU_factor = 20/max_RMS # number of VU bars is 20
+    elif max_RMS > 0.05:  
+        max_RMS -= 0.005
+    if leds_on:
+        vu_leds.value = min([1,args[0]*VU_factor/20])
+
 def inputLoop():
+    global amplitude
+    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
+
     def getDataMessage(address, *args):
         #oldvalues = eq
         if address == "/data/eq":
@@ -41,8 +60,8 @@ def inputLoop():
             wet.mul         =     fx['wet'] 
             delay.delay     =     fx['delay']
             reverb.size     =     fx['reverb']
-            distort.drive   =     fx['distort']**0.05
-            wah.mul         =     fx['wah']*30
+            distort.drive   =     fx['distort']
+            wah.mul         =     fx['wah']
 
     recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
     
@@ -51,31 +70,47 @@ def inputLoop():
 
 def controlLoop():
     numlines = 8
-    global amplitude
-    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
+
     
     pots = [MCP3008(channel=n) for n in range(numlines)]  
+    vals = [0] * numlines
     eqSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/eq", host = "localhost")
     fxSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/vol", host = "localhost")
 
-    def RMS_meter_callback(*args):
-        global max_RMS, VU_factor, meter
-        # set VU max to highest value, but back off highest value over time
-        if args[0] > max_RMS:
-            max_RMS = args[0]
-            VU_factor = 20/max_RMS # number of VU bars is 20
-        elif max_RMS > 0.05:  
-            max_RMS -= 0.005
-        if leds_on:
-            vu_leds.value = min([1,args[0]*VU_factor/20])
 
     while True:
         with data_lock:
-            bass = round(float(pots[0].value),3)
-            mid  = round(float(pots[1].value),3)
-            treb = round(float(pots[2].value),3)
-            vol  = round(float(pots[7].value),3)
+            new_vals = [1- int(pots[n].value*100)/100 for n in range(numlines)]
+            for i, nv in enumerate(new_vals):
+                if abs(vals[i]-nv) > 0.02:
+                    vals[i] = nv
+            wet = vals[0]
+            bass = vals[1]*2
+            mid = vals[2]*2
+            treb = vals[3]*2
+            dry = 1 - wet
+            delay = vals[4]
+            reverb = vals[5]
+            distort = vals[6]**0.05
+            wah = vals[7]*30
 
-        sender.send([bass, mid, treb])
-        volSender.send([vol])
+
+        eqSender.send([bass, mid, treb])
+        fxSender.send([wet, dry, delay, reverb, distort, wah])
         time.sleep(0.5)
+
+if __name__ == "__main__":
+    # Create two threads
+    thread1 = threading.Thread(target=inputLoop)
+    thread2 = threading.Thread(target=controlLoop)
+
+    # Start the threads
+    thread1.start()
+    thread2.start()
+
+    try:
+        # Join the threads to the main thread to keep them running
+        thread1.join()
+        thread2.join()
+    except KeyboardInterrupt:
+        print("Main thread stopped")          
