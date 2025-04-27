@@ -1,0 +1,430 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Amplifier_Operational:NE5532 U1
+U 2 1 680A8AD7
+P 7650 3220
+F 0 "U1" H 7650 3587 50  0000 C CNN
+F 1 "NE5532" H 7650 3496 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 7650 3220 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/ne5532.pdf" H 7650 3220 50  0001 C CNN
+	2    7650 3220
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 680A9FD0
+P 8330 3230
+F 0 "R8" V 8123 3230 50  0000 C CNN
+F 1 "100" V 8214 3230 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 8260 3230 50  0001 C CNN
+F 3 "~" H 8330 3230 50  0001 C CNN
+	1    8330 3230
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 680AA601
+P 7800 3770
+F 0 "R7" V 7593 3770 50  0000 C CNN
+F 1 "10K" V 7684 3770 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 7730 3770 50  0001 C CNN
+F 3 "~" H 7800 3770 50  0001 C CNN
+	1    7800 3770
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 680AAED7
+P 7030 3330
+F 0 "R5" V 6823 3330 50  0000 C CNN
+F 1 "10K" V 6914 3330 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6960 3330 50  0001 C CNN
+F 3 "~" H 7030 3330 50  0001 C CNN
+	1    7030 3330
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8180 3230 8000 3230
+Wire Wire Line
+	7950 3230 7950 3220
+Wire Wire Line
+	8000 3230 8000 3770
+Wire Wire Line
+	8000 3770 7950 3770
+Connection ~ 8000 3230
+Wire Wire Line
+	8000 3230 7950 3230
+Wire Wire Line
+	7180 3330 7350 3330
+Wire Wire Line
+	7350 3320 7350 3330
+Connection ~ 7350 3330
+Wire Wire Line
+	7350 3330 7350 3770
+$Comp
+L power:GND #PWR0101
+U 1 1 680AD375
+P 8720 3530
+F 0 "#PWR0101" H 8720 3280 50  0001 C CNN
+F 1 "GND" H 8725 3357 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 8720 3530 50  0001 C CNN
+F 3 "" H 8720 3530 50  0001 C CNN
+	1    8720 3530
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8720 3350 8720 3530
+Wire Wire Line
+	7650 3770 7350 3770
+$Comp
+L Device:R_POT RV1
+U 1 1 680AE7D9
+P 7030 3770
+F 0 "RV1" V 6823 3770 50  0000 C CNN
+F 1 "10K" V 6914 3770 50  0000 C CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK163_Single_Horizontal" H 7030 3770 50  0001 C CNN
+F 3 "~" H 7030 3770 50  0001 C CNN
+	1    7030 3770
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7350 3770 7180 3770
+Connection ~ 7350 3770
+Wire Wire Line
+	7030 3920 6880 3920
+Wire Wire Line
+	6880 3920 6880 3770
+Wire Wire Line
+	6880 3770 6680 3770
+Connection ~ 6880 3770
+$Comp
+L Device:R R6
+U 1 1 680B01BF
+P 6530 3770
+F 0 "R6" V 6323 3770 50  0000 C CNN
+F 1 "270" V 6414 3770 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6460 3770 50  0001 C CNN
+F 3 "~" H 6530 3770 50  0001 C CNN
+	1    6530 3770
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 680B086F
+P 6220 3500
+F 0 "R3" H 6150 3454 50  0000 R CNN
+F 1 "10K" H 6150 3545 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 6150 3500 50  0001 C CNN
+F 3 "~" H 6220 3500 50  0001 C CNN
+	1    6220 3500
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6880 3330 6220 3330
+Wire Wire Line
+	6220 3330 6220 3350
+Wire Wire Line
+	6380 3770 6220 3770
+Wire Wire Line
+	6220 3770 6220 3650
+$Comp
+L Amplifier_Operational:NE5532 U1
+U 1 1 680B1BCD
+P 5720 3340
+F 0 "U1" H 5720 3707 50  0000 C CNN
+F 1 "NE5532" H 5720 3616 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 5720 3340 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/ne5532.pdf" H 5720 3340 50  0001 C CNN
+	1    5720 3340
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6220 3330 6020 3330
+Wire Wire Line
+	6020 3330 6020 3340
+Connection ~ 6220 3330
+Wire Wire Line
+	6220 3770 5240 3770
+Wire Wire Line
+	5240 3770 5240 3440
+Wire Wire Line
+	5240 3440 5420 3440
+Connection ~ 6220 3770
+$Comp
+L Device:R R4
+U 1 1 680B477F
+P 5240 3960
+F 0 "R4" H 5170 3914 50  0000 R CNN
+F 1 "10K" H 5170 4005 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 5170 3960 50  0001 C CNN
+F 3 "~" H 5240 3960 50  0001 C CNN
+	1    5240 3960
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5240 3770 5240 3810
+Connection ~ 5240 3770
+$Comp
+L power:GND #PWR0102
+U 1 1 680B5C42
+P 4940 4270
+F 0 "#PWR0102" H 4940 4020 50  0001 C CNN
+F 1 "GND" H 4945 4097 50  0000 C CNN
+F 2 "" H 4940 4270 50  0001 C CNN
+F 3 "" H 4940 4270 50  0001 C CNN
+	1    4940 4270
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4940 4270 4940 4180
+Wire Wire Line
+	4940 4180 5240 4180
+Wire Wire Line
+	5240 4180 5240 4110
+$Comp
+L Device:R R2
+U 1 1 680B6A2D
+P 4940 3980
+F 0 "R2" H 4870 3934 50  0000 R CNN
+F 1 "10K" H 4870 4025 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 4870 3980 50  0001 C CNN
+F 3 "~" H 4940 3980 50  0001 C CNN
+	1    4940 3980
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 680B77BA
+P 4640 3970
+F 0 "R1" H 4570 3924 50  0000 R CNN
+F 1 "10K" H 4570 4015 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 4570 3970 50  0001 C CNN
+F 3 "~" H 4640 3970 50  0001 C CNN
+	1    4640 3970
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4940 4130 4940 4180
+Connection ~ 4940 4180
+Wire Wire Line
+	7350 3120 6280 3120
+Wire Wire Line
+	6280 3120 6280 2720
+Wire Wire Line
+	6280 2720 4940 2720
+Wire Wire Line
+	4940 2720 4940 3570
+$Comp
+L Device:C C2
+U 1 1 680BB57E
+P 3600 3570
+F 0 "C2" V 3348 3570 50  0000 C CNN
+F 1 "150nF" V 3439 3570 50  0000 C CNN
+F 2 "Capacitor_THT:C_Disc_D3.0mm_W2.0mm_P2.50mm" H 3638 3420 50  0001 C CNN
+F 3 "~" H 3600 3570 50  0001 C CNN
+	1    3600 3570
+	0    1    1    0   
+$EndComp
+Connection ~ 4940 3570
+Wire Wire Line
+	4940 3570 4940 3830
+Wire Wire Line
+	3750 3570 4940 3570
+$Comp
+L Device:C C1
+U 1 1 680BEA10
+P 3600 3110
+F 0 "C1" V 3348 3110 50  0000 C CNN
+F 1 "150nF" V 3439 3110 50  0000 C CNN
+F 2 "Capacitor_THT:C_Disc_D3.0mm_W2.0mm_P2.50mm" H 3638 2960 50  0001 C CNN
+F 3 "~" H 3600 3110 50  0001 C CNN
+	1    3600 3110
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5420 3240 4640 3240
+Wire Wire Line
+	4640 3240 4640 3820
+Wire Wire Line
+	4640 3240 4640 3110
+Wire Wire Line
+	4640 3110 3750 3110
+Connection ~ 4640 3240
+Wire Wire Line
+	3660 4180 3660 3900
+Wire Wire Line
+	4640 4180 4940 4180
+Wire Wire Line
+	4640 4120 4640 4180
+Wire Wire Line
+	3660 4180 4640 4180
+Connection ~ 4640 4180
+$Comp
+L Device:CP C3
+U 1 1 680C9031
+P 7390 1930
+F 0 "C3" H 7508 1976 50  0000 L CNN
+F 1 "10uF" H 7508 1885 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 7428 1780 50  0001 C CNN
+F 3 "~" H 7390 1930 50  0001 C CNN
+	1    7390 1930
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7860 1830 7860 1780
+Wire Wire Line
+	7860 1780 7390 1780
+Wire Wire Line
+	7850 2060 7850 2080
+Wire Wire Line
+	7850 2080 7390 2080
+$Comp
+L Device:CP C4
+U 1 1 680CC2C7
+P 7390 2230
+F 0 "C4" H 7273 2184 50  0000 R CNN
+F 1 "10uF" H 7273 2275 50  0000 R CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 7428 2080 50  0001 C CNN
+F 3 "~" H 7390 2230 50  0001 C CNN
+	1    7390 2230
+	1    0    0    1   
+$EndComp
+Connection ~ 7390 2080
+Wire Wire Line
+	7390 2470 7390 2380
+$Comp
+L Device:C Cb1
+U 1 1 680D6E51
+P 6820 2070
+F 0 "Cb1" H 6935 2116 50  0000 L CNN
+F 1 "100nF" H 6935 2025 50  0000 L CNN
+F 2 "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm" H 6858 1920 50  0001 C CNN
+F 3 "~" H 6820 2070 50  0001 C CNN
+	1    6820 2070
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7390 1780 6820 1780
+Wire Wire Line
+	6350 1780 6350 1800
+Connection ~ 7390 1780
+Wire Wire Line
+	6820 1920 6820 1780
+Connection ~ 6820 1780
+Wire Wire Line
+	6820 1780 6350 1780
+$Comp
+L Amplifier_Operational:NE5532 U1
+U 3 1 680CF714
+P 6450 2100
+F 0 "U1" H 6408 2146 50  0000 L CNN
+F 1 "NE5532" H 6408 2055 50  0000 L CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 6450 2100 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/ne5532.pdf" H 6450 2100 50  0001 C CNN
+	3    6450 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6350 2400 6350 2470
+Wire Wire Line
+	6350 2470 6820 2470
+Wire Wire Line
+	6820 2220 6820 2470
+Connection ~ 6820 2470
+Wire Wire Line
+	6820 2470 7390 2470
+Wire Wire Line
+	8810 3350 8720 3350
+Text GLabel 9000 3350 0    50   Output ~ 0
+Gnd
+Text GLabel 8970 3230 0    50   Output ~ 0
+Out
+Wire Wire Line
+	8480 3230 8800 3230
+Connection ~ 7390 2470
+Wire Wire Line
+	8040 2470 7390 2470
+Wire Wire Line
+	8050 2060 7850 2060
+Wire Wire Line
+	8050 1830 7860 1830
+$Comp
+L power:-12V #PWR0105
+U 1 1 680C89D1
+P 8040 2470
+F 0 "#PWR0105" H 8040 2570 50  0001 C CNN
+F 1 "-12V" H 8055 2643 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 8040 2470 50  0001 C CNN
+F 3 "" H 8040 2470 50  0001 C CNN
+	1    8040 2470
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0104
+U 1 1 680C82CA
+P 8050 2060
+F 0 "#PWR0104" H 8050 1810 50  0001 C CNN
+F 1 "GND" H 8055 1887 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 8050 2060 50  0001 C CNN
+F 3 "" H 8050 2060 50  0001 C CNN
+	1    8050 2060
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR0103
+U 1 1 680C7AB9
+P 8050 1830
+F 0 "#PWR0103" H 8050 1680 50  0001 C CNN
+F 1 "+12V" H 8065 2003 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 8050 1830 50  0001 C CNN
+F 3 "" H 8050 1830 50  0001 C CNN
+	1    8050 1830
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:XLR3_Switched J1
+U 1 1 680F40CD
+P 2810 3590
+F 0 "J1" H 2810 3863 50  0000 C CNN
+F 1 "XLR3_Switched" H 2810 3954 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR-6.35mm_Neutrik_NCJ6FA-V-0_Vertical" H 2810 3690 50  0001 C CNN
+F 3 " ~" H 2810 3690 50  0001 C CNN
+	1    2810 3590
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3660 3890 3110 3890
+Wire Wire Line
+	3450 3110 2810 3110
+Wire Wire Line
+	2810 3110 2810 3290
+Wire Wire Line
+	2510 3590 2510 3280
+Wire Wire Line
+	2510 3280 3360 3280
+Wire Wire Line
+	3360 3280 3360 3570
+Wire Wire Line
+	3360 3570 3450 3570
+Wire Wire Line
+	2950 3590 3110 3590
+Wire Wire Line
+	3110 3890 3110 3590
+Wire Wire Line
+	3110 3590 3100 3590
+Connection ~ 3110 3590
+$EndSCHEMATC
