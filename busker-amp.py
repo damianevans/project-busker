@@ -75,7 +75,7 @@ def controlLoop():
     pots = [MCP3008(channel=n) for n in range(numlines)]  
     vals = [0] * numlines
     eqSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/eq", host = "localhost")
-    fxSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/vol", host = "localhost")
+    fxSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/fx", host = "localhost")
 
 
     while True:
