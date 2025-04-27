@@ -20,13 +20,17 @@
 # Expand(input, downthresh=- 40, upthresh=- 10, ratio=2, risetime=0.01, falltime=0.1, lookahead=5.0, outputAmp=False, mul=1, add=0)
 
 
+from signal import pause
 import pyo
 
 
-s = pyo.Server(duplex=1, nchnls=1).boot().start()
+s = pyo.Server(duplex=1, nchnls=1)
+s.setInOutDevice(1)
+s.boot().start()
 #sine = pyo.Sine(freq=[400,800], mul=0.001).out()
 a = pyo.Input(chnl=0, mul=1)
-reverb = pyo.Freeverb(a, size=0.9, mul=1).out()
+reverb = pyo.Freeverb(a, size=0.9, mul=1.2).out()
+pause()
 
 
 
