@@ -9,7 +9,8 @@ FootSwitch::FootSwitch()
       currentState(IDLE),
       previousState(IDLE),
       lastFlashTime(0),
-      greenLedState(false) {
+      greenLedState(false),
+      eraseRecordingState(false) {
 }
 
 void FootSwitch::init() {
@@ -102,6 +103,7 @@ void FootSwitch::handleStateTransitions() {
                     digitalWrite(redLEDPin, LOW);
                     delay(flashInterval - 150);
                 }
+                setEraseRecordingState(true);
                 currentState = IDLE;
             }
             break;
@@ -150,4 +152,12 @@ String FootSwitch::getStateName(State state) const {
 
 bool FootSwitch::hasStateChanged() const {
     return currentState != previousState;
+}
+
+bool FootSwitch::getEraseRecordingState() const {
+  return eraseRecordingState;
+}
+
+void FootSwitch::setEraseRecordingState(bool state) {
+  eraseRecordingState = state;
 }

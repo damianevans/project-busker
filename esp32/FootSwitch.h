@@ -31,6 +31,10 @@ public:
 
     bool hasStateChanged() const;
 
+    bool getEraseRecordingState() const;
+
+    void setEraseRecordingState(bool state);
+
 private:
     // Pin definitions
     static const int footSwitch1Pin = 5;   // Footswitch 1: Record/Stop Rec & Play
@@ -50,6 +54,7 @@ private:
     // State variables
     State currentState;
     State previousState;
+    bool eraseRecordingState;
     
     // State names array
     static const String status[4];
