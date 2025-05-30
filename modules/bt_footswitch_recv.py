@@ -93,7 +93,7 @@ class ESP32BLEClient:
             
             # Try to parse as looper value
             try:
-                temp_value = string(message).strip().upper()
+                temp_value = str(message).strip().upper()
                 print(f"[{timestamp}] looper: {temp_value}")
                 
                 # Store looper data
@@ -113,7 +113,7 @@ class ESP32BLEClient:
     def get_latest_looperstate(self):
         """Get the most recent looper reading"""
         if self.looperstate_data:
-            return string(self.looperstate_data[-1].get('looper', None))
+            return str(self.looperstate_data[-1].get('looper', None))
         return ""
     
 
