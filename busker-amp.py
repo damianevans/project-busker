@@ -126,7 +126,7 @@ async def pedalLoop():
     try:
         # Connect to ESP32
         if not await ble_client.connect():
-            print("Failed to connect to ESP32")
+            print("Failed to connect to ESP32. Try re-starting the device.")
             return
         
         # Main loop
