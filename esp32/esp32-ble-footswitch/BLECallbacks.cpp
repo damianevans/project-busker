@@ -18,11 +18,14 @@ void MyServerCallbacks::onDisconnect(BLEServer* pServer) {
 }
 
 void MyCharacteristicCallbacks::onWrite(BLECharacteristic *pCharacteristic) {
-  std::string value = pCharacteristic->getValue();
-  Serial.println("Received: " + String(value.c_str()));
+    // Get the value directly as a std::string
+    std::string value = std::string(pCharacteristic->getValue().c_str());
 
-  // Check if the response is "RECV:ERASE"
-  if (value == "RECV:ERASE") {
-    eraseAckReceived = true; // Set the flag
-  }
+    // Print the received data
+    Serial.println("Received data: " + String(value.c_str())); // Convert std::string to String for Serial output
+
+    // Check if the response is "RECV:ERASE"
+    if (value == "RECV:ERASE") {
+        eraseAckReceived = true; // Set the flag
+    }
 }

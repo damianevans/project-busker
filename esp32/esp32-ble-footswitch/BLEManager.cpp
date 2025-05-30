@@ -88,14 +88,15 @@ void BLEManager::sendData(const String& data) {
   }
 }
 
-bool BLEManager::isConnected() {
-  return deviceConnected;
+void BLEManager::onDataReceived(const std::string &data) {
+    Serial.println("Received data: " + String(data.c_str()));
+
+    // Check if the response is "RECV:ERASE"
+    if (data == "RECV:ERASE") {
+        eraseAckReceived = true; // Set the flag
+    }
 }
 
-float BLEManager::getTemperature() {
-#ifdef ESP32
-  return temperatureRead();
-#else
-  return 25.0; // fallback temperature for testing
-#endif
+bool BLEManager::isConnected() {
+  return deviceConnected;
 }

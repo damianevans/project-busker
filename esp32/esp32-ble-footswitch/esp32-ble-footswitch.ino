@@ -2,6 +2,7 @@
 // File: esp32-ble-temperature.ino (main Arduino file)
 // ========================================
 #include "BLEManager.h"
+#include "BLECallbacks.h"
 #include "FootSwitch.h"
 
 FootSwitch footSwitch;
@@ -46,6 +47,10 @@ void loop() {
   // Handle BLE connection state
   BLEManager::handleConnection();
   
+  if(footSwitch.getEraseRecordingState()) {
+    sendErase();
+    footSwitch.setEraseRecordingState(false); // Reset the erase state after sending
+  }
 
   if(footSwitch.hasStateChanged()) {
     Serial.println("Sending '" +  footSwitch.getStateName(footSwitch.getCurrentState()) + "' via bluetooth");
