@@ -134,11 +134,11 @@ async def pedalLoop():
             try:
                 # Non-blocking input simulation (in real scenario, you might want to use threading)
                 # For now, just keep the connection alive and show periodic status
-                await asyncio.sleep(5)
+                #await asyncio.sleep(5)
                 
                 looperState = ble_client.get_latest_looperstate()
                 if looperState != oldLooperState:
-                    ble_client.send_message("RECV:" + looperState)
+                    await ble_client.send_message("RECV:" + looperState)
                 
                 # Optional: Send a test message every 30 seconds
                 # await ble_client.send_message("Hello from Pi!")
