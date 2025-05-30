@@ -93,7 +93,7 @@ class ESP32BLEClient:
             # Try to parse as looper value
             try:
                 temp_value = float(message)
-                print(f"[{timestamp}] looper: {temp_value:.2f}°C")
+                print(f"[{timestamp}] looper: {temp_value}")
                 
                 # Store looper data
                 self.looperstate_data.append({

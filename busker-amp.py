@@ -2,7 +2,10 @@ import pyo64
 import time
 from gpiozero import MCP3008, LEDBarGraph
 import threading
+from modules.bt_footswitch_recv import ESP32BLEClient
+import logging
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 s = pyo64.Server()
 s.setInOutDevice(1)
 s.boot()
@@ -112,18 +115,60 @@ def controlLoop():
         sender.send([bass, mid, treb, wet, dry, delay, reverb, distort, wah])
         time.sleep(0.05)
 
+async def pedalLoop():
+    global looperState
+    global oldLooperState
+    looperState = oldLooperState = "IDLE"
+    ble_client = ESP32BLEClient("ESP32")
+    print("Connecting to ESP32...")
+
+    try:
+        # Connect to ESP32
+        if not await ble_client.connect():
+            print("Failed to connect to ESP32")
+            return
+        
+        print("Connected! Receiving looper data...")
+        print("Commands: 'send <message>' to send data, 'history' for looper history, 'quit' to exit")
+        
+        # Main loop
+        while ble_client.connected:
+            try:
+                # Non-blocking input simulation (in real scenario, you might want to use threading)
+                # For now, just keep the connection alive and show periodic status
+                await asyncio.sleep(5)
+                
+                looperState = ble_client.get_latest_looperstate()
+                if looperState != oldLooperState:
+                    ble_client.send_message("RECV:" + looperState)
+                    print(f"Latest looper: {looperState}")
+                
+                # Optional: Send a test message every 30 seconds
+                # await ble_client.send_message("Hello from Pi!")
+                
+            except KeyboardInterrupt:
+                print("\nShutting down...")
+                break
+                
+    except Exception as e:
+        print(f"Application error: {e}")
+        
+    finally:
+        await ble_client.disconnect()
+
 if __name__ == "__main__":
     # Create two threads
     thread1 = threading.Thread(target=inputLoop)
     thread2 = threading.Thread(target=controlLoop)
-
+    thread3 = threading.Thread(target=asyncio.run, args=(pedalLoop(),))
     # Start the threads
     thread1.start()
     thread2.start()
-
+    thread3.start()
     try:
         # Join the threads to the main thread to keep them running
         thread1.join()
         thread2.join()
+        thread3.join()
     except KeyboardInterrupt:
         print("Main thread stopped")          
