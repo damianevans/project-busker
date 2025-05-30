@@ -129,9 +129,6 @@ async def pedalLoop():
             print("Failed to connect to ESP32")
             return
         
-        print("Connected! Receiving looper data...")
-        print("Commands: 'send <message>' to send data, 'history' for looper history, 'quit' to exit")
-        
         # Main loop
         while ble_client.connected:
             try:
@@ -142,7 +139,6 @@ async def pedalLoop():
                 looperState = ble_client.get_latest_looperstate()
                 if looperState != oldLooperState:
                     ble_client.send_message("RECV:" + looperState)
-                    print(f"Latest looper: {looperState}")
                 
                 # Optional: Send a test message every 30 seconds
                 # await ble_client.send_message("Hello from Pi!")

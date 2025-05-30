@@ -94,7 +94,7 @@ class ESP32BLEClient:
             # Try to parse as looper value
             try:
                 temp_value = str(message).strip().upper()
-                print(f"[{timestamp}] looper: {temp_value}")
+                print(f"[{timestamp}] received looper state: {temp_value}")
                 
                 # Store looper data
                 self.looperstate_data.append({'looper': temp_value})
