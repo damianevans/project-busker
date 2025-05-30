@@ -4,6 +4,7 @@ from gpiozero import MCP3008, LEDBarGraph
 import threading
 from modules.bt_footswitch_recv import ESP32BLEClient
 import logging
+import asyncio
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 s = pyo64.Server()
