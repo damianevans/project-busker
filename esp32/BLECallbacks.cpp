@@ -3,6 +3,8 @@
 // ========================================
 #include "BLECallbacks.h"
 
+bool eraseAckReceived = false;
+
 void MyServerCallbacks::onConnect(BLEServer* pServer) {
   deviceConnected = true;
   digitalWrite(LED_PIN, HIGH);
@@ -16,12 +18,11 @@ void MyServerCallbacks::onDisconnect(BLEServer* pServer) {
 }
 
 void MyCharacteristicCallbacks::onWrite(BLECharacteristic *pCharacteristic) {
-  String rxValue = pCharacteristic->getValue();
+  std::string value = pCharacteristic->getValue();
+  Serial.println("Received: " + String(value.c_str()));
 
-  if (rxValue.length() > 0) {
-    Serial.println("*********");
-    Serial.print("Received Value: ");
-    Serial.println(rxValue);
-    Serial.println("*********");
+  // Check if the response is "RECV:ERASE"
+  if (value == "RECV:ERASE") {
+    eraseAckReceived = true; // Set the flag
   }
 }

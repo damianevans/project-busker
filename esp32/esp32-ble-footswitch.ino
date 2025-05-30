@@ -19,9 +19,25 @@ void sendErase() {
     BLEManager::handleConnection();
   }
 
-  if (BLEManager::isConnected() && footSwitch.getEraseRecordingState() ) {
-    BLEManager::sendData(String("ERASE"));
-    footSwitch.setEraseRecordingState(true);
+  if (BLEManager::isConnected() && footSwitch.getEraseRecordingState()) {
+      BLEManager::sendData(String("ERASE"));
+      footSwitch.setEraseRecordingState(true);
+
+      // Wait for "RECV:ERASE" response
+      unsigned long startTime = millis();
+      eraseAckReceived = false; // Reset the flag
+      while (!eraseAckReceived) {
+          BLEManager::handleConnection(); // Keep handling BLE events
+          if (millis() - startTime > 5000) { // Timeout after 5 seconds
+              Serial.println("Timeout waiting for RECV:ERASE");
+              break;
+          }
+          delay(10); // Small delay to avoid busy-waiting
+      }
+
+      if (eraseAckReceived) {
+          Serial.println("RECV:ERASE response received!");
+      }
   }
 }
 
