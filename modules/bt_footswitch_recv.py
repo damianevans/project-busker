@@ -113,7 +113,7 @@ class ESP32BLEClient:
     def get_latest_looperstate(self):
         """Get the most recent looper reading"""
         if self.looperstate_data:
-            return str(self.looperstate_data[-1].get('looper', None))
+            return str(self.looperstate_data[-1].get('looper', None)).capitalize()
         return ""
     
 

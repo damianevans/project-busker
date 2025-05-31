@@ -1,5 +1,7 @@
 import pyo64
 import time
+import os
+import shutil
 from gpiozero import MCP3008, LEDBarGraph, LED
 import threading
 from modules.bt_footswitch_recv import ESP32BLEClient
@@ -35,6 +37,14 @@ max_RMS = 0
 VU_factor = 1
 vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 27)
 bt_led = LED("BOARD11")
+
+cdir        = os.path.dirname(os.path.abspath(__file__))
+silence     = cdir+'/silent.wav'
+loop_file   = cdir+'/pedalloop.wav'
+shutil.copy(silence,loop_file)
+loop_vol    = 0.3
+loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+loop_rec    = None
 
 
 
@@ -84,7 +94,37 @@ def inputLoop():
     recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
     
     while(True):
-        time.sleep(0.05)
+        match looperState:
+            case "IDLE":
+                if loop_play.isPlaying():
+                    loop_play.stop()
+                if loop_rec is not None:
+                    loop_rec.stop()
+
+            case "PLAYING":
+                if not loop_play.isPlaying():
+                    loop_play.play()
+                if loop_rec is not None:
+                    loop_rec.stop()
+                    
+            case "RECORDING":
+                shutil.copy(silence,loop_file)
+                loop_play.stop()
+                loop_rec = pyo64.SfRecorder(loop_file, loop=True, mul=loop_vol)
+                loop_rec.record()
+
+            case "STOPPED":
+                if loop_play.isPlaying():
+                    loop_play.stop()
+                if loop_rec is not None:
+                    loop_rec.stop()     
+
+            case "ERASE":
+                if loop_play.isPlaying():
+                    loop_play.stop()    
+                if loop_rec is not None:
+                    loop_rec.stop() 
+                shutil.copy(silence,loop_file)               
 
 def controlLoop():
     numlines = 8
