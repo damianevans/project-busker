@@ -41,6 +41,7 @@ private:
     static const int footSwitch2Pin = 17;  // Footswitch 2: Play/Stop
     static const int redLEDPin = 2;        // Red LED
     static const int greenLEDPin = 4;      // Green LED
+
     
     // Timing variables
     unsigned long lastFlashTime;

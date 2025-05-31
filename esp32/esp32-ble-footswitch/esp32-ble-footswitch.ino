@@ -6,6 +6,7 @@
 #include "FootSwitch.h"
 
 FootSwitch footSwitch;
+const int blueLEDPin = 18;      // Blue LED
   
 void setup() {
   Serial.begin(115200);
@@ -46,6 +47,12 @@ void loop() {
   footSwitch.update();
   // Handle BLE connection state
   BLEManager::handleConnection();
+  
+  if (BLEManager::isConnected()) {
+    digitalWrite(blueLEDPin, HIGH); // Turn on blue LED when connected
+  } else {
+    digitalWrite(blueLEDPin, LOW); // Turn off blue LED when not connected
+  }
   
   if(footSwitch.getEraseRecordingState()) {
     sendErase();
