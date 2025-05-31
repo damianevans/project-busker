@@ -45,7 +45,7 @@ shutil.copy(silence,loop_file)
 loop_vol    = 0.3
 loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
 loop_rec    = None
-
+looperState = oldLooperState = "IDLE"
 
 
 def RMS_meter_callback(*args):
