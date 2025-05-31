@@ -33,7 +33,7 @@ fx = {'bass': 1., 'mid': 1., 'treb': 1.,'wet': 1., 'dry': 1., 'delay': 1., 'reve
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
-vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 17)
+vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 27)
 bt_led = LED("BOARD11")
 
 
