@@ -54,6 +54,7 @@ void FootSwitch::performStartupSequence() {
     digitalWrite(redLEDPin, HIGH);
     digitalWrite(greenLEDPin, LOW);
     digitalWrite(bluePin, LOW); 
+    delay(600);
 }
 
 void FootSwitch::update() {
