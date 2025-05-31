@@ -180,6 +180,8 @@ async def pedalLoop():
                 bt_led.on()  # Turn on the LED to indicate connection
                 looperState = ble_client.get_latest_looperstate()
                 if looperState != oldLooperState:
+                    # flash the LED to indicate state change
+                    bt_led.blink(on_time=0.1, off_time=0.1, n=2)
                     await ble_client.send_message("RECV:" + looperState)
                     oldLooperState = looperState
                 
