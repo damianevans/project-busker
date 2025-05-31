@@ -20,6 +20,8 @@ void FootSwitch::init() {
     // Configure LED pins
     pinMode(redLEDPin, OUTPUT);
     pinMode(greenLEDPin, OUTPUT);
+    pinMode(bluePin, OUTPUT);
+    digitalWrite(bluePin, LOW); 
     digitalWrite(redLEDPin, LOW);
     digitalWrite(greenLEDPin, LOW);
     
@@ -31,18 +33,27 @@ void FootSwitch::performStartupSequence() {
     // Startup routine
     digitalWrite(redLEDPin, HIGH);
     digitalWrite(greenLEDPin, LOW);
-    delay(800);
-    
-    digitalWrite(redLEDPin, HIGH);
-    digitalWrite(greenLEDPin, HIGH);
+    digitalWrite(bluePin, LOW); 
     delay(800);
     
     digitalWrite(redLEDPin, LOW);
     digitalWrite(greenLEDPin, HIGH);
+    digitalWrite(bluePin, LOW); 
     delay(800);
     
     digitalWrite(redLEDPin, LOW);
     digitalWrite(greenLEDPin, LOW);
+    digitalWrite(bluePin, HIGH); 
+    delay(800);
+    
+    digitalWrite(redLEDPin, LOW);
+    digitalWrite(greenLEDPin, HIGH);
+    digitalWrite(bluePin, LOW); 
+    delay(800);
+
+    digitalWrite(redLEDPin, HIGH);
+    digitalWrite(greenLEDPin, LOW);
+    digitalWrite(bluePin, LOW); 
 }
 
 void FootSwitch::update() {
