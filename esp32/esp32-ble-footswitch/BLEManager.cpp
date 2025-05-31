@@ -9,7 +9,7 @@
 
 // Global variables definition
 bool deviceConnected = false;
-const int LED_PIN = 2;
+const int LED_PIN = 18;
 
 // Static member definitions
 BLEServer* BLEManager::pServer = nullptr;
