@@ -1,6 +1,6 @@
 import pyo64
 import time
-from gpiozero import MCP3008, LEDBarGraph
+from gpiozero import MCP3008, LEDBarGraph, LED
 import threading
 from modules.bt_footswitch_recv import ESP32BLEClient
 import logging
@@ -34,6 +34,7 @@ data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
 vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 17)
+bt_led = LED("BOARD11")
 
 
 
@@ -119,6 +120,7 @@ def controlLoop():
 async def pedalLoop():
     global looperState
     global oldLooperState
+    bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
     looperState = oldLooperState = "IDLE"
     ble_client = ESP32BLEClient("ESP32")
     print("Connecting to ESP32...")
@@ -135,7 +137,7 @@ async def pedalLoop():
                 # Non-blocking input simulation (in real scenario, you might want to use threading)
                 # For now, just keep the connection alive and show periodic status
                 await asyncio.sleep(0.5)
-                
+                bt_led.on()  # Turn on the LED to indicate connection
                 looperState = ble_client.get_latest_looperstate()
                 if looperState != oldLooperState:
                     await ble_client.send_message("RECV:" + looperState)
@@ -153,6 +155,7 @@ async def pedalLoop():
         
     finally:
         await ble_client.disconnect()
+        bt_led.off()
 
 if __name__ == "__main__":
     # Create two threads
