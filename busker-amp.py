@@ -60,7 +60,7 @@ def RMS_meter_callback(*args):
         vu_leds.value = min([1,args[0]*VU_factor/20])
 
 def inputLoop():
-    global amplitude
+    global amplitude, loop_rec
     amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
 
     def getDataMessage(address, *args):
