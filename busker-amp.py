@@ -42,11 +42,11 @@ cdir        = os.path.dirname(os.path.abspath(__file__))
 silence     = cdir+'/silent.wav'
 loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
-loop_vol    = 0.3
-loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
-loop_rec    = None
+#loop_vol    = 0.3
+#loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+#loop_rec    = None
 looperState = oldLooperState = "IDLE"
-loop_play.stop()
+#loop_play.stop()
 
 
 def RMS_meter_callback(*args):
@@ -158,53 +158,53 @@ def controlLoop():
         sender.send([bass, mid, treb, wet, dry, delay, reverb, distort, wah])
         time.sleep(0.05)
 
-async def pedalLoop():
-    global looperState
-    global oldLooperState
-    bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
-    looperState = oldLooperState = "IDLE"
-    ble_client = ESP32BLEClient("ESP32")
-    print("Connecting to ESP32...")
+#sync def pedalLoop():
+##   global looperState
+###   global oldLooperState
+####   bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
+#####   looperState = oldLooperState = "IDLE"
+######   ble_client = ESP32BLEClient("ESP32")
+#######   print("Connecting to ESP32...")
+########
+########   try:
+########       # Connect to ESP32
+########       if not await ble_client.connect():
+########           print("Failed to connect to ESP32. Try re-starting the device.")
+########           return
+########       
+########       # Main loop
+########       while ble_client.connected:
+########           try:
+########               # Non-blocking input simulation (in real scenario, you might want to use threading)
+########               # For now, just keep the connection alive and show periodic status
+########               await asyncio.sleep(0.5)
+########               bt_led.on()  # Turn on the LED to indicate connection
+########               looperState = ble_client.get_latest_looperstate()
+########               if looperState != oldLooperState:
+########                   # flash the LED to indicate state change
+########                   bt_led.blink(on_time=0.1, off_time=0.1, n=2)
+########                   await ble_client.send_message("RECV:" + looperState)
+########                   oldLooperState = looperState
+########               
+########               # Optional: Send a test message every 30 seconds
+########               # await ble_client.send_message("Hello from Pi!")
+########               
+########           except KeyboardInterrupt:
+########               print("\nShutting down...")
+########               break
+#######                
+######    except Exception as e:
+ #####       print(f"Application error: {e}")
+  ####      
+   ### finally:
+    ##    await ble_client.disconnect()
+     #   bt_led.off()
 
-    try:
-        # Connect to ESP32
-        if not await ble_client.connect():
-            print("Failed to connect to ESP32. Try re-starting the device.")
-            return
-        
-        # Main loop
-        while ble_client.connected:
-            try:
-                # Non-blocking input simulation (in real scenario, you might want to use threading)
-                # For now, just keep the connection alive and show periodic status
-                await asyncio.sleep(0.5)
-                bt_led.on()  # Turn on the LED to indicate connection
-                looperState = ble_client.get_latest_looperstate()
-                if looperState != oldLooperState:
-                    # flash the LED to indicate state change
-                    bt_led.blink(on_time=0.1, off_time=0.1, n=2)
-                    await ble_client.send_message("RECV:" + looperState)
-                    oldLooperState = looperState
-                
-                # Optional: Send a test message every 30 seconds
-                # await ble_client.send_message("Hello from Pi!")
-                
-            except KeyboardInterrupt:
-                print("\nShutting down...")
-                break
-                
-    except Exception as e:
-        print(f"Application error: {e}")
-        
-    finally:
-        await ble_client.disconnect()
-        bt_led.off()
-
-async def run_pedal_loop():
-    global pedal_loop_task
-    pedal_loop_task = asyncio.create_task(pedalLoop())  # Start pedalLoop initially
-    while True:
-        await asyncio.sleep(0.07)  # Keep the event loop running
+#async def run_pedal_loop():
+#    global pedal_loop_task
+#    pedal_loop_task = asyncio.create_task(pedalLoop())  # Start pedalLoop initially
+#    while True:
+#        await asyncio.sleep(0.07)  # Keep the event loop running
 
 
 
