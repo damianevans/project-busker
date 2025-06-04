@@ -31,7 +31,7 @@ amplitude = None
 leds_on = False
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
 #fx = {'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
-fx = {'bass': 1., 'mid': 1., 'treb': 1.,'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
+fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'delay': 0, 'reverb':0, 'distort': 0, 'wah': 0}
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
@@ -141,7 +141,7 @@ def controlLoop():
         with data_lock:
             new_vals = [1- int(pots[n].value*100)/100 for n in range(numlines)]
             for i, nv in enumerate(new_vals):
-                if abs(vals[i]-nv) > 0.02:
+                if abs(vals[i]-nv) > 0.1:
                     vals[i] = nv
 
         wet = vals[0]
