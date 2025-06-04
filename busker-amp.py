@@ -43,9 +43,10 @@ silence     = cdir+'/silent.wav'
 loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
 loop_vol    = 0.3
-loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
 loop_rec    = None
 looperState = oldLooperState = "IDLE"
+loop_play.stop()
 
 
 def RMS_meter_callback(*args):
@@ -110,7 +111,7 @@ def inputLoop():
             case "RECORDING":
                 shutil.copy(silence,loop_file)
                 loop_play.stop()
-                loop_rec = pyo64.SfRecorder(loop_file, loop=True, mul=loop_vol)
+                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
                 loop_rec.record()
 
             case "STOPPED":
@@ -199,19 +200,26 @@ async def pedalLoop():
         await ble_client.disconnect()
         bt_led.off()
 
+async def run_pedal_loop():
+    global pedal_loop_task
+    pedal_loop_task = asyncio.create_task(pedalLoop())  # Start pedalLoop initially
+    while True:
+        await asyncio.sleep(0.07)  # Keep the event loop running
+
+
+
 if __name__ == "__main__":
     # Create two threads
     thread1 = threading.Thread(target=inputLoop)
     thread2 = threading.Thread(target=controlLoop)
-    thread3 = threading.Thread(target=asyncio.run, args=(pedalLoop(),))
     # Start the threads
     thread1.start()
     thread2.start()
-    thread3.start()
     try:
+        asyncio.run(run_pedal_loop())
         # Join the threads to the main thread to keep them running
-        thread1.join()
-        thread2.join()
-        thread3.join()
     except KeyboardInterrupt:
         print("Main thread stopped")          
+    finally:
+        thread1.join()
+        thread2.join()
