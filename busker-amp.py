@@ -95,7 +95,7 @@ def inputLoop():
     recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
     
     while(True):
-        delay(0.05)  # Sleep to avoid busy waiting
+        time.sleep(0.05)  # Sleep to avoid busy waiting
  #      match looperState:
  #          case "IDLE":
  #              if loop_play.isPlaying():
