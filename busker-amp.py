@@ -95,37 +95,38 @@ def inputLoop():
     recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
     
     while(True):
-        match looperState:
-            case "IDLE":
-                if loop_play.isPlaying():
-                    loop_play.stop()
-                if loop_rec is not None:
-                    loop_rec.stop()
+        delay(0.05)  # Sleep to avoid busy waiting
+ #      match looperState:
+ #          case "IDLE":
+ #              if loop_play.isPlaying():
+ #                  loop_play.stop()
+ #              if loop_rec is not None:
+ #                  loop_rec.stop()
 
-            case "PLAYING":
-                if not loop_play.isPlaying():
-                    loop_play.play()
-                if loop_rec is not None:
-                    loop_rec.stop()
-                    
-            case "RECORDING":
-                shutil.copy(silence,loop_file)
-                loop_play.stop()
-                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
-                loop_rec.record()
+ #          case "PLAYING":
+ #              if not loop_play.isPlaying():
+ #                  loop_play.play()
+ #              if loop_rec is not None:
+ #                  loop_rec.stop()
+ #                  
+ #          case "RECORDING":
+ #              shutil.copy(silence,loop_file)
+ #              loop_play.stop()
+ #              loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
+ #              loop_rec.record()
 
-            case "STOPPED":
-                if loop_play.isPlaying():
-                    loop_play.stop()
-                if loop_rec is not None:
-                    loop_rec.stop()     
+ #          case "STOPPED":
+ #              if loop_play.isPlaying():
+ #                  loop_play.stop()
+ #              if loop_rec is not None:
+ #                  loop_rec.stop()     
 
-            case "ERASE":
-                if loop_play.isPlaying():
-                    loop_play.stop()    
-                if loop_rec is not None:
-                    loop_rec.stop() 
-                shutil.copy(silence,loop_file)               
+ #          case "ERASE":
+ #              if loop_play.isPlaying():
+ #                  loop_play.stop()    
+ #              if loop_rec is not None:
+ #                  loop_rec.stop() 
+ #              shutil.copy(silence,loop_file)               
 
 def controlLoop():
     numlines = 8
