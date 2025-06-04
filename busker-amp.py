@@ -215,11 +215,11 @@ if __name__ == "__main__":
     # Start the threads
     thread1.start()
     thread2.start()
-    try:
-        asyncio.run(run_pedal_loop())
-        # Join the threads to the main thread to keep them running
-    except KeyboardInterrupt:
-        print("Main thread stopped")          
-    finally:
-        thread1.join()
-        thread2.join()
+   # try:
+   #     asyncio.run(run_pedal_loop())
+   #     # Join the threads to the main thread to keep them running
+   # except KeyboardInterrupt:
+   #     print("Main thread stopped")          
+   # finally:
+    thread1.join()
+    thread2.join()
