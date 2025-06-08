@@ -43,11 +43,11 @@ cdir        = os.path.dirname(os.path.abspath(__file__))
 silence     = cdir+'/silent.wav'
 loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
-#loop_vol    = 0.3
-#loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
-#loop_rec    = None
+loop_vol    = 0.3
+loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+loop_rec    = None
 looperState = oldLooperState = "IDLE"
-#loop_play.stop()
+loop_play.stop()
 
 
 def RMS_meter_callback(*args):
@@ -77,7 +77,38 @@ def inputLoop():
             reverb.size     =     fx['reverb']
             distort.drive   =     fx['distort']
             wah.mul         =     fx['wah']
+        elif address == "/data/looperstate":
+            localLooperState = args[0]
+            match localLooperState:
+                case "IDLE":    
+                    if loop_play.isPlaying():
+                        loop_play.stop()    
+                    if loop_rec is not None:
+                        loop_rec.stop()
+                case "PLAYING":
+                    if not loop_play.isPlaying():
+                        loop_play.play()
+                    if loop_rec is not None:
+                        loop_rec.stop()
+                case "RECORDING":
+                    shutil.copy(silence, loop_file)
+                    loop_play.stop()
+                    loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
+                    loop_rec.record()
+                case "STOPPED":
+                    if loop_play.isPlaying():
+                        loop_play.stop()    
+                    if loop_rec is not None:
+                        loop_rec.stop()
+                case "ERASE":
+                    if loop_play.isPlaying():
+                        loop_play.stop()
+                    if loop_rec is not None:
+                        loop_rec.stop() 
+                    shutil.copy(silence, loop_file)
 
+
+                # loopSender.send([looperState])  # Uncomment if you want to send the state back
         #oldvalues = eq
         #if address == "/data/eq":
         #    with data_lock:
@@ -137,8 +168,6 @@ def controlLoop():
     pots = [MCP3008(channel=n) for n in range(numlines)]  
     vals = [0] * numlines
     sender = pyo64.OscDataSend(types="fffffffff", port = 9900, address = "/data/eq", host = "localhost")
-    #fxSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/fx", host = "localhost")
-    last_console_update = 0
 
     while True:
         with data_lock:
@@ -157,19 +186,7 @@ def controlLoop():
         distort = vals[6]**0.05
         wah = vals[7]*30
 
-        # Print status to console every 0.1 seconds, overwriting the previous line
-        now = time.time()
-        if now - last_console_update > 0.1:
-            status = (
-                f"wet: {wet:.2f}  dry: {dry:.2f}  bass: {bass:.2f}  mid: {mid:.2f}  "
-                f"treb: {treb:.2f}  chorus: {chorus:.2f}  reverb: {reverb:.2f}  "
-                f"distort: {distort:.2f}  wah: {wah:.2f}  "
-                f"looperState: {looperState}  oldLooperState: {oldLooperState}   "
-            )
-            print('\r\033[K' + status, end='', flush=True)  # \033[K clears to end of line
-            last_console_update = now
-
-
+ 
         sender.send([bass, mid, treb, wet, dry, chorus, reverb, distort, wah])
         time.sleep(0.05)
 
@@ -180,7 +197,7 @@ async def pedalLoop():
     looperState = oldLooperState = "IDLE"
     ble_client = ESP32BLEClient("ESP32")
     print("Connecting to ESP32...")
-    
+    loopSender = pyo64.OscDataSend(types="s", port = 9900, address = "/data/looperstate", host = "localhost")
     try:
         # Connect to ESP32
         if not await ble_client.connect():
@@ -190,8 +207,6 @@ async def pedalLoop():
         # Main loop
         while ble_client.connected:
             try:
-                # Non-blocking input simulation (in real scenario, you might want to use threading)
-                # For now, just keep the connection alive and show periodic status
                 await asyncio.sleep(0.5)
                 bt_led.on()  # Turn on the LED to indicate connection
                 looperState = ble_client.get_latest_looperstate()
@@ -200,7 +215,7 @@ async def pedalLoop():
                     bt_led.blink(on_time=0.1, off_time=0.1, n=2)
                     await ble_client.send_message("RECV:" + looperState)
                     oldLooperState = looperState
-                
+                    loopSender.send([looperState])  # Send the state to the server
                 # Optional: Send a test message every 30 seconds
                 # await ble_client.send_message("Hello from Pi!")
                 
