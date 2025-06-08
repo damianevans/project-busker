@@ -5,11 +5,10 @@ import shutil
 from gpiozero import MCP3008, LEDBarGraph, LED
 import threading
 from modules.bt_footswitch_recv import ESP32BLEClient
-import logging
 import asyncio
-from display_utils import display_loop
+#from display_utils import display_loop
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 s = pyo64.Server()
 s.setInOutDevice(1)
 s.boot()
@@ -44,7 +43,7 @@ silence     = cdir+'/silent.wav'
 loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
 loop_vol    = 0.3
-loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
 loop_rec    = None
 looperState = oldLooperState = "IDLE"
 
@@ -85,8 +84,8 @@ def inputLoop():
                     if loop_rec is not None:
                         loop_rec.stop()
                 case "PLAYING":
-                    if not loop_play.isPlaying():
-                        loop_play.play()
+                    loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+                    loop_play.play()
                     if loop_rec is not None:
                         loop_rec.stop()
                 case "RECORDING":
@@ -240,15 +239,15 @@ if __name__ == "__main__":
     # Create threads
     thread1 = threading.Thread(target=inputLoop)
     thread2 = threading.Thread(target=controlLoop)
-    thread3 = threading.Thread(
-        target=display_loop, 
-        args=(fx, looperState, oldLooperState, data_lock), 
-        daemon=True
-    )
+    # thread3 = threading.Thread(
+    #     target=display_loop, 
+    #     args=(fx, looperState, oldLooperState, data_lock), 
+    #     daemon=True
+    # )
 
     thread1.start()
     thread2.start()
-    thread3.start()
+    # thread3.start()
     try:
         asyncio.run(run_pedal_loop())
         # Join the threads to the main thread to keep them running
