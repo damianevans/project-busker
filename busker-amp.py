@@ -17,6 +17,17 @@ s.start()
 audio    = pyo64.Input()
 dry      = pyo64.Input()
 
+cdir        = os.path.dirname(os.path.abspath(__file__))
+silence     = cdir+'/silent.wav'
+loop_file   = cdir+'/pedalloop.wav'
+shutil.copy(silence,loop_file)
+loop_vol    = 0.3
+
+# Initialize loop player once - don't recreate it
+loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+loop_rec    = None
+looperState = oldLooperState = "IDLE"
+
 follow   = pyo64.Follower(audio)
 wahfq    = pyo64.Scale(follow, outmin=300, outmax=20000)
 chorus   = pyo64.Chorus(audio, feedback=0.25, bal=1)
@@ -26,7 +37,7 @@ distort  = pyo64.Disto(reverb)
 filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
-mix       = pyo64.Mix([dry,wet,wah]).out()
+mix       = pyo64.Mix([dry,wet,wah,loop_play]).out()
 amplitude = None
 leds_on = False
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
@@ -37,15 +48,6 @@ max_RMS = 0
 VU_factor = 1
 vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 27)
 bt_led = LED("BOARD11")
-
-cdir        = os.path.dirname(os.path.abspath(__file__))
-silence     = cdir+'/silent.wav'
-loop_file   = cdir+'/pedalloop.wav'
-shutil.copy(silence,loop_file)
-loop_vol    = 0.3
-loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
-loop_rec    = None
-looperState = oldLooperState = "IDLE"
 
 
 def RMS_meter_callback(*args):
@@ -77,33 +79,73 @@ def inputLoop():
         elif address == "/data/looperstate":
             localLooperState = args[0]
             print(f"Looper state changed to: {localLooperState}")
-            match localLooperState:
-                case "IDLE":    
-                    if loop_play.isPlaying():
-                        loop_play.stop()    
-                    if loop_rec is not None:
-                        loop_rec.stop()
-                case "PLAYING":
-                    loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
-                    loop_play.play()
-                    if loop_rec is not None:
-                        loop_rec.stop()
-                case "RECORDING":
-                    shutil.copy(silence, loop_file)
+            if localLooperState == "IDLE":    
+                # Stop everything
+                if loop_play.isPlaying():
+                    loop_play.stop()    
+                if loop_rec is not None:
+                    loop_rec.stop()
+                    loop_rec = None
+                    
+            elif localLooperState == "RECORDING":
+                # Stop playback and start recording
+                if loop_play.isPlaying():
                     loop_play.stop()
-                    loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1).play()
-                    #loop_rec.record()
-                case "STOPPED":
-                    if loop_play.isPlaying():
-                        loop_play.stop()    
-                    if loop_rec is not None:
-                        loop_rec.stop()
-                case "ERASE":
-                    if loop_play.isPlaying():
-                        loop_play.stop()
-                    if loop_rec is not None:
-                        loop_rec.stop() 
-                    shutil.copy(silence, loop_file)
+                if loop_rec is not None:
+                    loop_rec.stop()
+                
+                # Clear the loop file and start fresh recording
+                shutil.copy(silence, loop_file)
+                print("Starting recording...")
+                
+                # Create new Record object and start recording
+                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
+                loop_rec.play()  # This starts the recording process
+                print("Recording active")
+                
+            elif localLooperState == "PLAYING":
+                # Stop recording if active
+                if loop_rec is not None:
+                    print("Stopping recording...")
+                    loop_rec.stop()
+                    loop_rec = None
+                    # Give a moment for the file to be written
+                    time.sleep(0.1)
+                
+                # Stop current player and create new one with updated file
+                if loop_play.isPlaying():
+                    loop_play.stop()
+                
+                # Recreate the player with the new recorded content
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+                loop_play.out()  # Connect to output
+                loop_play.play()
+                print("Playback started")
+                
+            elif localLooperState == "STOPPED":
+                # Stop everything but keep recorded content
+                if loop_play.isPlaying():
+                    loop_play.stop()    
+                if loop_rec is not None:
+                    loop_rec.stop()
+                    loop_rec = None
+                print("Playback stopped")
+                
+            elif localLooperState == "ERASE":
+                # Stop everything and clear the loop
+                if loop_play.isPlaying():
+                    loop_play.stop()
+                if loop_rec is not None:
+                    loop_rec.stop()
+                    loop_rec = None
+                
+                # Clear the loop file
+                shutil.copy(silence, loop_file)
+                
+                # Recreate player with empty file
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+                print("Loop erased")
+
 
 
                 # loopSender.send([looperState])  # Uncomment if you want to send the state back
