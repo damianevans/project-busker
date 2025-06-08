@@ -37,7 +37,9 @@ distort  = pyo64.Disto(reverb)
 filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
-mix       = pyo64.Mix([dry,wet,wah,loop_play]).out()
+loop_mix = pyo64.Mix([loop_play], mul=1.0)  # Separate mixer for loop
+main_mix = pyo64.Mix([dry, wet, wah])       # Main effects mix
+final_mix = pyo64.Mix([main_mix, loop_mix]).out()  # Final output mix
 amplitude = None
 leds_on = False
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
@@ -63,7 +65,7 @@ def RMS_meter_callback(*args):
 
 def inputLoop():
     global amplitude, loop_rec, loop_play
-    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
+    amplitude = pyo64.RMS(main_mix, function=RMS_meter_callback)
     def getDataMessage(address, *args):
         if address == "/data/eq":
             #with data_lock:
@@ -99,8 +101,7 @@ def inputLoop():
                 print("Starting recording...")
                 
                 # Create new Record object and start recording
-                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
-                loop_rec.play()  # This starts the recording process
+                loop_rec = pyo64.Record(main_mix, filename=loop_file, fileformat=0, sampletype=1)
                 print("Recording active")
                 
             elif localLooperState == "PLAYING":
@@ -109,18 +110,24 @@ def inputLoop():
                     print("Stopping recording...")
                     loop_rec.stop()
                     loop_rec = None
-                    # Give a moment for the file to be written
-                    time.sleep(0.1)
+                    # FIX 2: Give more time for the file to be written and flushed
+                    time.sleep(0.2)  # Increased from 0.1 to 0.2
                 
                 # Stop current player and create new one with updated file
                 if loop_play.isPlaying():
                     loop_play.stop()
                 
+                # FIX 3: Remove the old player from the audio chain before creating new one
+                try:
+                    loop_play.stop()
+                except:
+                    pass
+                
                 # Recreate the player with the new recorded content
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
-                loop_play.out()  # Connect to output
-                loop_play.play()
-                print("Playback started")
+                # Update the loop mixer
+                global loop_mix
+                loop_mix.setInput(0, loop_play)  # Replace input 0 with new loop_play
                 
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
