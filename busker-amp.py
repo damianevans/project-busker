@@ -165,7 +165,7 @@ def controlLoop():
                 f"distort: {distort:.2f}  wah: {wah:.2f}  "
                 f"looperState: {looperState}  oldLooperState: {oldLooperState}   "
             )
-            print('\r' + status + ' ' * 10, end='', flush=True)
+            print('\r\033[K' + status, end='', flush=True)  # \033[K clears to end of line
             last_console_update = now
 
 
