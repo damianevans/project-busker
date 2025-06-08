@@ -155,8 +155,20 @@ def controlLoop():
         reverb = vals[5]
         distort = vals[6]**0.05
         wah = vals[7]*30
-        #eqSender.send([bass, mid, treb])
-        #fxSender.send([wet, dry, delay, reverb, distort, wah])
+
+        # Print status to console every 0.1 seconds, overwriting the previous line
+        now = time.time()
+        if now - last_console_update > 0.1:
+            status = (
+                f"wet: {wet:.2f}  dry: {dry:.2f}  bass: {bass:.2f}  mid: {mid:.2f}  "
+                f"treb: {treb:.2f}  delay: {delay:.2f}  reverb: {reverb:.2f}  "
+                f"distort: {distort:.2f}  wah: {wah:.2f}  "
+                f"looperState: {looperState}  oldLooperState: {oldLooperState}   "
+            )
+            print('\r' + status, end='', flush=True)
+            last_console_update = now
+
+
         sender.send([bass, mid, treb, wet, dry, delay, reverb, distort, wah])
         time.sleep(0.05)
 
