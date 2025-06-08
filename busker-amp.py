@@ -92,7 +92,8 @@ def inputLoop():
                 case "RECORDING":
                     shutil.copy(silence, loop_file)
                     loop_play.stop()
-                    loop_rec.record()
+                    loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1).play()
+                    #loop_rec.record()
                 case "STOPPED":
                     if loop_play.isPlaying():
                         loop_play.stop()    
