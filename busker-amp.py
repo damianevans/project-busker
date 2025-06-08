@@ -137,7 +137,7 @@ def controlLoop():
     vals = [0] * numlines
     sender = pyo64.OscDataSend(types="fffffffff", port = 9900, address = "/data/eq", host = "localhost")
     #fxSender = pyo64.OscDataSend(types="fff", port = 9900, address = "/data/fx", host = "localhost")
-
+    last_console_update = 0
 
     while True:
         with data_lock:
