@@ -21,12 +21,12 @@ dry      = pyo64.Input()
 follow   = pyo64.Follower(audio)
 wahfq    = pyo64.Scale(follow, outmin=300, outmax=20000)
 
-chorus    = pyo64.Chorus(audio, feedback=0.15)
 #delay    = pyo64.SmoothDelay(audio, feedback=0.15)
 reverb   = pyo64.Freeverb(chorus)
 distort  = pyo64.Disto(reverb)
 filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
+chorus   = pyo64.Chorus(audio, feedback=0.15, bal=(wet-dry))
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 mix       = pyo64.Mix([dry,wet,wah]).out()
 amplitude = None
