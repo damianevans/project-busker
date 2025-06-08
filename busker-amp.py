@@ -45,7 +45,6 @@ loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
 loop_vol    = 0.3
 loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
-loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
 loop_rec    = None
 looperState = oldLooperState = "IDLE"
 amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
