@@ -21,9 +21,9 @@ dry      = pyo64.Input()
 follow   = pyo64.Follower(audio)
 wahfq    = pyo64.Scale(follow, outmin=300, outmax=20000)
 
-delay    = pyo64.Chorus(audio, feedback=0.15)
+chorus    = pyo64.Chorus(audio, feedback=0.15)
 #delay    = pyo64.SmoothDelay(audio, feedback=0.15)
-reverb   = pyo64.Freeverb(delay)
+reverb   = pyo64.Freeverb(chorus)
 distort  = pyo64.Disto(reverb)
 filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
@@ -33,7 +33,7 @@ amplitude = None
 leds_on = False
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
 #fx = {'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
-fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'delay': 0, 'reverb':0, 'distort': 0, 'wah': 0}
+fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'chorus': 0, 'reverb':0, 'distort': 0, 'wah': 0}
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
@@ -69,11 +69,12 @@ def inputLoop():
     def getDataMessage(address, *args):
         if address == "/data/eq":
             #with data_lock:
-            fx['bass'], fx['mid'], fx['treb'], fx['wet'], fx['dry'], fx['delay'], fx['reverb'], fx['distort'], fx['wah'] = args
+            fx['bass'], fx['mid'], fx['treb'], fx['wet'], fx['dry'], fx['chorus'], fx['reverb'], fx['distort'], fx['wah'] = args
             filter.mul = [fx['bass']*100, fx['mid']*100, fx['treb']*100]
             dry.mul         = 1 - fx['dry']
             wet.mul         =     fx['wet'] 
-            delay.delay     =     fx['delay']
+            chorus.depth    =     fx['chorus']
+        #    delay.delay     =     fx['delay']            
             reverb.size     =     fx['reverb']
             distort.drive   =     fx['distort']
             wah.mul         =     fx['wah']
@@ -152,7 +153,7 @@ def controlLoop():
         mid = vals[2]*2
         treb = vals[3]*2
         dry = 1 - wet
-        delay = vals[4]
+        chorus = vals[4]
         reverb = vals[5]
         distort = vals[6]**0.05
         wah = vals[7]*30
@@ -162,7 +163,7 @@ def controlLoop():
         if now - last_console_update > 0.1:
             status = (
                 f"wet: {wet:.2f}  dry: {dry:.2f}  bass: {bass:.2f}  mid: {mid:.2f}  "
-                f"treb: {treb:.2f}  delay: {delay:.2f}  reverb: {reverb:.2f}  "
+                f"treb: {treb:.2f}  chorus: {chorus:.2f}  reverb: {reverb:.2f}  "
                 f"distort: {distort:.2f}  wah: {wah:.2f}  "
                 f"looperState: {looperState}  oldLooperState: {oldLooperState}   "
             )
@@ -170,7 +171,7 @@ def controlLoop():
             last_console_update = now
 
 
-        sender.send([bass, mid, treb, wet, dry, delay, reverb, distort, wah])
+        sender.send([bass, mid, treb, wet, dry, chorus, reverb, distort, wah])
         time.sleep(0.05)
 
 async def pedalLoop():
