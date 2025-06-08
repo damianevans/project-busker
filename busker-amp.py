@@ -165,7 +165,7 @@ def controlLoop():
                 f"distort: {distort:.2f}  wah: {wah:.2f}  "
                 f"looperState: {looperState}  oldLooperState: {oldLooperState}   "
             )
-            print('\r' + status, end='', flush=True)
+            print('\r' + status + ' ' * 10, end='', flush=True)
             last_console_update = now
 
 
