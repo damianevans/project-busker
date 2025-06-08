@@ -31,7 +31,7 @@ def display_values(fx, looperState, oldLooperState, data_lock):
     print("┌─────────────┬─────────┬─────────────┬─────────┐")
     print("│ PARAMETER   │  VALUE  │ PARAMETER   │  VALUE  │")
     print("├─────────────┼─────────┼─────────────┼─────────┤")
-    print(f"│ WET         │ {current_fx['wet']:7.3f} │ DELAY       │ {current_fx['delay']:7.3f} │")
+    print(f"│ WET         │ {current_fx['wet']:7.3f} │ CHORUS       │ {current_fx['chorus']:7.3f} │")
     print(f"│ DRY         │ {current_fx['dry']:7.3f} │ REVERB      │ {current_fx['reverb']:7.3f} │")
     print(f"│ BASS        │ {current_fx['bass']:7.3f} │ DISTORT     │ {current_fx['distort']:7.3f} │")
     print(f"│ MID         │ {current_fx['mid']:7.3f} │ WAH         │ {current_fx['wah']:7.3f} │")
