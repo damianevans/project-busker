@@ -47,7 +47,6 @@ loop_vol    = 0.3
 loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
 loop_rec    = None
 looperState = oldLooperState = "IDLE"
-amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
 
 
 def RMS_meter_callback(*args):
@@ -63,7 +62,7 @@ def RMS_meter_callback(*args):
 
 def inputLoop():
     global amplitude, loop_rec, loop_play
-
+    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
     def getDataMessage(address, *args):
         if address == "/data/eq":
             #with data_lock:
