@@ -45,9 +45,10 @@ loop_file   = cdir+'/pedalloop.wav'
 shutil.copy(silence,loop_file)
 loop_vol    = 0.3
 loop_play   = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
 loop_rec    = None
 looperState = oldLooperState = "IDLE"
-loop_play.stop()
+amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
 
 
 def RMS_meter_callback(*args):
@@ -62,8 +63,7 @@ def RMS_meter_callback(*args):
         vu_leds.value = min([1,args[0]*VU_factor/20])
 
 def inputLoop():
-    global amplitude, loop_rec
-    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
+    global amplitude, loop_rec, loop_play
 
     def getDataMessage(address, *args):
         if address == "/data/eq":
@@ -79,6 +79,7 @@ def inputLoop():
             wah.mul         =     fx['wah']
         elif address == "/data/looperstate":
             localLooperState = args[0]
+            print(f"Looper state changed to: {localLooperState}")
             match localLooperState:
                 case "IDLE":    
                     if loop_play.isPlaying():
@@ -93,7 +94,6 @@ def inputLoop():
                 case "RECORDING":
                     shutil.copy(silence, loop_file)
                     loop_play.stop()
-                    loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
                     loop_rec.record()
                 case "STOPPED":
                     if loop_play.isPlaying():
@@ -196,7 +196,7 @@ async def pedalLoop():
     bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
     looperState = oldLooperState = "IDLE"
     ble_client = ESP32BLEClient("ESP32")
-    print("Connecting to ESP32...")
+    #print("Connecting to ESP32...")
     loopSender = pyo64.OscDataSend(types="s", port = 9900, address = "/data/looperstate", host = "localhost")
     try:
         # Connect to ESP32
