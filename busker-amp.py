@@ -119,16 +119,9 @@ def inputLoop():
                 # Stop current player and create new one with updated file
                 if loop_play.isPlaying():
                     loop_play.stop()
-                
-                # FIX 3: Remove the old player from the audio chain before creating new one
-                try:
-                    loop_play.stop()
-                except:
-                    pass
-                
+       
                 # Recreate the player with the new recorded content
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
-                mix.add(loop_play)  
                 loop_play.play()  # Start playback of the loop                
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
@@ -152,7 +145,8 @@ def inputLoop():
                 shutil.copy(silence, loop_file)
                 
                 # Recreate player with empty file
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+                loop_play.stop()
                 print("Loop erased")
 
 
