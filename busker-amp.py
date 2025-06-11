@@ -69,6 +69,7 @@ def inputLoop():
     global amplitude, loop_rec, loop_play
     amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
     def getDataMessage(address, *args):
+        global amplitude, loop_rec, loop_play
         if address == "/data/eq":
             #with data_lock:
             fx['bass'], fx['mid'], fx['treb'], fx['wet'], fx['dry'], fx['chorus'], fx['reverb'], fx['distort'], fx['wah'] = args
