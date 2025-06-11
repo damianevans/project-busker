@@ -37,9 +37,9 @@ distort  = pyo64.Disto(reverb)
 filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
-loop_mix = pyo64.Mix([loop_play], mul=1.0)  # Separate mixer for loop
-main_mix = pyo64.Mix([dry, wet, wah])       # Main effects mix
-final_mix = pyo64.Mix([main_mix, loop_mix]).out()  # Final output mix
+
+mix = pyo64.Mix([dry, wet, wah]).out()       # Main effects mix
+
 amplitude = None
 leds_on = False
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
@@ -65,7 +65,7 @@ def RMS_meter_callback(*args):
 
 def inputLoop():
     global amplitude, loop_rec, loop_play
-    amplitude = pyo64.RMS(main_mix, function=RMS_meter_callback)
+    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
     def getDataMessage(address, *args):
         if address == "/data/eq":
             #with data_lock:
@@ -101,7 +101,7 @@ def inputLoop():
                 print("Starting recording...")
                 
                 # Create new Record object and start recording
-                loop_rec = pyo64.Record(main_mix, filename=loop_file, fileformat=0, sampletype=1)
+                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
                 print("Recording active")
                 
             elif localLooperState == "PLAYING":
@@ -124,19 +124,19 @@ def inputLoop():
                     pass
                 
                 # Recreate the player with the new recorded content
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
-                # Update the loop mixer
-                global loop_mix
-                loop_mix.setInput(0, loop_play)  # Replace input 0 with new loop_play
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
+                mix.voices = [dry, wet, wah, loop_play]  # Update mix voices
                 
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
                 if loop_play.isPlaying():
                     loop_play.stop()    
+
                 if loop_rec is not None:
                     loop_rec.stop()
                     loop_rec = None
                 print("Playback stopped")
+                mix.voices = [dry, wet, wah]
                 
             elif localLooperState == "ERASE":
                 # Stop everything and clear the loop
@@ -151,6 +151,7 @@ def inputLoop():
                 
                 # Recreate player with empty file
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
+                mix.voices = [dry, wet, wah]
                 print("Loop erased")
 
 
