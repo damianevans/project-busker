@@ -40,7 +40,7 @@ filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 
-mix = pyo64.Mix([dry, wet, wah], voices=2).out()       # Main effects mix
+mix = pyo64.Mix([dry, wet, wah, loop_play]).out()       # Main effects mix
 
 amplitude = None
 leds_on = False
