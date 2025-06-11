@@ -128,6 +128,7 @@ def inputLoop():
                 
                 # Recreate the player with the new recorded content
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
+                mix.add(loop_play)  
                 loop_play.play()  # Start playback of the loop                
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
