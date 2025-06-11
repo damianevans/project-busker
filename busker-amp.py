@@ -40,7 +40,7 @@ filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 
-mix = pyo64.Mix([dry, wet, wah, loop_play]).out()       # Main effects mix
+mix = pyo64.Mix([dry, wet, wah]).out()       # Main effects mix
 
 amplitude = None
 leds_on = False
@@ -121,8 +121,8 @@ def inputLoop():
                     loop_play.stop()
        
                 # Recreate the player with the new recorded content
+                print("Starting playback...")
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
-                loop_play.play()  # Start playback of the loop                
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
                 if loop_play.isPlaying():
