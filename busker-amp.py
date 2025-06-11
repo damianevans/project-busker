@@ -90,6 +90,7 @@ def inputLoop():
                     loop_rec = None
                     
             elif localLooperState == "RECORDING":
+                print("Starting recording...")
                 # Stop playback and start recording
                 if loop_play.isPlaying():
                     loop_play.stop()
@@ -98,7 +99,6 @@ def inputLoop():
                 
                 # Clear the loop file and start fresh recording
                 shutil.copy(silence, loop_file)
-                print("Starting recording...")
                 
                 # Create new Record object and start recording
                 loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
