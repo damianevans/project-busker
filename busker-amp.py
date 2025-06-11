@@ -107,7 +107,7 @@ def inputLoop():
                 loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
                 print("Recording active")
                 
-            elif localLooperState == "PLAYING":
+            elif localLooperState == "PLAYBACK":
                 # Stop recording if active
                 if loop_rec is not None:
                     print("Stopping recording...")
@@ -121,7 +121,7 @@ def inputLoop():
                     loop_play.stop()
        
                 # Recreate the player with the new recorded content
-                loop_play = pyo64.SfPlayer('/home/admin/Documents/guitarpedal/pedalloop.wav', loop=True, mul=loop_vol,).out()
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
                 loop_play.play()  # Start playback of the loop                
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
@@ -145,7 +145,7 @@ def inputLoop():
                 shutil.copy(silence, loop_file)
                 
                 # Recreate player with empty file
-                loop_play = pyo64.SfPlayer('/home/admin/Documents/guitarpedal/pedalloop.wav', loop=True, mul=loop_vol)
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
                 loop_play.stop()
                 print("Loop erased")
 
