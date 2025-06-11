@@ -81,7 +81,7 @@ def inputLoop():
             distort.drive   =     fx['distort']
             wah.mul         =     fx['wah']
         elif address == "/data/looperstate":
-            localLooperState = args[0].toUpper()  
+            localLooperState = args[0].upper()  
             print(f"Looper state changed to: {localLooperState}")
             if localLooperState == "IDLE":    
                 # Stop everything
