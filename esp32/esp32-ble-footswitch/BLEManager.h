@@ -24,7 +24,7 @@ class BLEManager {
     static void handleConnection();
     static void sendData(const String& data);
     static bool isConnected();
-    static float getTemperature();
+    static void onDataReceived(const std::string& value);
 };
 
 // Global variables (accessible by callbacks)

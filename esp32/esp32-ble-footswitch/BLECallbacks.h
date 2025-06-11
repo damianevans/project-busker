@@ -10,6 +10,7 @@
 // Forward declarations
 extern bool deviceConnected;
 extern const int LED_PIN;
+extern bool eraseAckReceived;
 
 class MyServerCallbacks: public BLEServerCallbacks {
   public:
