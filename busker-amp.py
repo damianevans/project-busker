@@ -66,10 +66,10 @@ def RMS_meter_callback(*args):
         vu_leds.value = min([1,args[0]*VU_factor/20])
 
 def inputLoop():
-    global amplitude, loop_rec, loop_play
+    global amplitude, loop_rec, loop_play, loop_file, silence
     amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
     def getDataMessage(address, *args):
-        global amplitude, loop_rec, loop_play
+        global amplitude, loop_rec, loop_play, loop_file, silence
         if address == "/data/eq":
             #with data_lock:
             fx['bass'], fx['mid'], fx['treb'], fx['wet'], fx['dry'], fx['chorus'], fx['reverb'], fx['distort'], fx['wah'] = args
@@ -172,37 +172,7 @@ def inputLoop():
     
     while(True):
         time.sleep(0.05)  # Sleep to avoid busy waiting
- #      match looperState:
- #          case "IDLE":
- #              if loop_play.isPlaying():
- #                  loop_play.stop()
- #              if loop_rec is not None:
- #                  loop_rec.stop()
-
- #          case "PLAYING":
- #              if not loop_play.isPlaying():
- #                  loop_play.play()
- #              if loop_rec is not None:
- #                  loop_rec.stop()
- #                  
- #          case "RECORDING":
- #              shutil.copy(silence,loop_file)
- #              loop_play.stop()
- #              loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
- #              loop_rec.record()
-
- #          case "STOPPED":
- #              if loop_play.isPlaying():
- #                  loop_play.stop()
- #              if loop_rec is not None:
- #                  loop_rec.stop()     
-
- #          case "ERASE":
- #              if loop_play.isPlaying():
- #                  loop_play.stop()    
- #              if loop_rec is not None:
- #                  loop_rec.stop() 
- #              shutil.copy(silence,loop_file)               
+            
 
 def controlLoop():
     numlines = 8
