@@ -6,7 +6,6 @@ from gpiozero import MCP3008, LEDBarGraph, LED
 import threading
 from modules.bt_footswitch_recv import ESP32BLEClient
 import asyncio
-#from display_utils import display_loop
 
 
 s = pyo64.Server()
@@ -148,25 +147,6 @@ def inputLoop():
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
                 loop_play.stop()
                 print("Loop erased")
-
-
-
-                # loopSender.send([looperState])  # Uncomment if you want to send the state back
-        #oldvalues = eq
-        #if address == "/data/eq":
-        #    with data_lock:
-        #        eq['bass'], eq['mid'], eq['treb'] = args
-        #    filter.mul = [eq['bass']*100, eq['mid']*100, eq['treb']*100]
-        #    #print(f"Data received: bass = {eq['bass']}, mid = {eq['mid']}, treb = {eq['treb']}")
-        #if address ==  "/data/fx":
-        #    with data_lock:
-        #        fx['wet'], fx['dry'], fx['delay'], fx['reverb'], fx['distort'], fx['wah'] = args
-        #    dry.mul         = 1 - fx['dry']
-        #    wet.mul         =     fx['wet'] 
-        #    delay.delay     =     fx['delay']
-        #    reverb.size     =     fx['reverb']
-        #    distort.drive   =     fx['distort']
-        #    wah.mul         =     fx['wah']
 
     recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
     
