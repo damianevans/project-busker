@@ -20,6 +20,8 @@ dry      = pyo64.Input()
 cdir        = os.path.dirname(os.path.abspath(__file__))
 silence     = cdir+'/silent.wav'
 loop_file   = cdir+'/pedalloop.wav'
+print(f"Using silence file: {silence}")
+print(f"Using loop file: {loop_file}")
 shutil.copy(silence,loop_file)
 loop_vol    = 0.3
 
