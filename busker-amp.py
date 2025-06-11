@@ -38,7 +38,7 @@ filter   = pyo64.MultiBand(distort, num=3, mul=[1,1,1])
 wet      = pyo64.Mix([filter])
 wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 
-mix = pyo64.Mix([dry, wet, wah]).out()       # Main effects mix
+mix = pyo64.Mix([dry, wet, wah], voices=2).out()       # Main effects mix
 
 amplitude = None
 leds_on = False
@@ -124,9 +124,8 @@ def inputLoop():
                     pass
                 
                 # Recreate the player with the new recorded content
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
-                mix.voices = [dry, wet, wah, loop_play]  # Update mix voices
-                
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
+                loop_play.play()  # Start playback of the loop                
             elif localLooperState == "STOPPED":
                 # Stop everything but keep recorded content
                 if loop_play.isPlaying():
@@ -136,7 +135,6 @@ def inputLoop():
                     loop_rec.stop()
                     loop_rec = None
                 print("Playback stopped")
-                mix.voices = [dry, wet, wah]
                 
             elif localLooperState == "ERASE":
                 # Stop everything and clear the loop
@@ -150,8 +148,7 @@ def inputLoop():
                 shutil.copy(silence, loop_file)
                 
                 # Recreate player with empty file
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
-                mix.voices = [dry, wet, wah]
+                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol).out()
                 print("Loop erased")
 
 
