@@ -23,7 +23,7 @@ loop_file   = cdir+'/pedalloop.wav'
 print(f"Using silence file: {silence}")
 print(f"Using loop file: {loop_file}")
 shutil.copy(silence,loop_file)
-loop_vol    = 0.3
+loop_vol    = 0.9
 
 # Initialize loop player once - don't recreate it
 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
