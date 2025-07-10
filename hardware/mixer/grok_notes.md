@@ -24,3 +24,20 @@ Coordinates:Components are placed on an A4 sheet with approximate X, Y coordinat
 Channels 1–4 are vertically stacked (Y=2800, 4300, 5800, 7300) for clarity.
 Summing stage is at X=5000, output stage at X=7000–8000.
 
+Custom Symbol for 3.5mm Jack (if Needed)If KiCad lacks a 3.5mm TRS jack with a switch, create one:In Symbol Editor: Create a symbol named TRS_3.5mm_Switch.
+Add pins:Pin 1: Tip (audio left, input/output).
+Pin 2: Ring (audio right, input/output).
+Pin 3: Sleeve (ground).
+Pin 4: Switch NC (normally closed, connects to line out when unplugged).
+
+Save and use this symbol for J2, connecting Pin 4 to R16 (line out) and Pin 1 to R17 (headphone out).
+
+## Additional Notes
+
+### Mono vs. Stereo: 
+The schematic is designed for mono output for simplicity. For stereo, duplicate the headphone output stage (add U4B, R18, C11) and connect to J2’s ring pin.
+Power Supply: Ensure ±12V rails are connected to all NE5532 power pins (V+ = pin 8, V- = pin 4). Add more decoupling capacitors (100nF) near U3 and U4 if needed.
+Testing: After loading the schematic, simulate in a tool like LTspice (export netlist) to verify gain, frequency response, and headphone drive capability.
+Footprint Assignment: Choose appropriate footprints in KiCad’s PCB Editor (e.g., DIP-8_W7.62mm for NE5532, PinHeader_1x3 for J1, PhoneJack_3.5mm for J2).
+
+
