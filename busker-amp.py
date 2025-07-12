@@ -49,7 +49,23 @@ fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'chorus': 0, 'reverb':0
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
-vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 27)
+led_gr1 = "BOARD16"
+led_gr2 = "BOARD15"
+led_gr3 = "BOARD36"
+led_gr4 = "BOARD31"
+
+led_yel1 = "BOARD29"
+led_yel2 = "BOARD22"
+led_yel3 = "BOARD18"
+
+led_red1 = "BOARD10"
+led_red2 = "BOARD8"
+
+vu_leds = LEDBarGraph(led_gr1, led_gr2, led_gr3, led_gr4,
+                      led_yel1, led_yel2, led_yel3,
+                      led_red1, led_red2)
+vu_leds.off()
+vu_leds.value = 0
 bt_led = LED("BOARD11")
 
 
