@@ -1,0 +1,734 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "4-Channel Audio Mixer with Line/Headphone Output"
+Date "2025-07-10"
+Rev "1.0"
+Comp "xAI User Project"
+Comment1 "Designed for NE5532 op-amps, ±12V rails"
+Comment2 "Channels 1-3: Line-level inputs, Channel 4: High-Z 1/4\" jack"
+Comment3 "Output: Switchable line out or 3.5mm headphone jack"
+Comment4 ""
+$EndDescr
+
+$Comp
+L Amplifier_Operational:NE5532 U1
+U 1 1 66B1A8F1
+P 2000 3000
+F 0 "U1" H 2000 3200 50  0000 C CNN
+F 1 "NE5532" H 2000 3100 50  0000 C CNN
+F 2 "" H 2000 3000 50  0001 C CNN
+F 3 "" H 2000 3000 50  0001 C CNN
+    1    2000 3000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Amplifier_Operational:NE5532 U2
+U 1 1 66B1A8F2
+P 2000 4500
+F 0 "U2" H 2000 4700 50  0000 C CNN
+F 1 "NE5532" H 2000 4600 50  0000 C CNN
+F 2 "" H 2000 4500 50  0001 C CNN
+F 3 "" H 2000 4500 50  0001 C CNN
+    1    2000 4500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Amplifier_Operational:NE5532 U3
+U 1 1 66B1A8F3
+P 5000 3500
+F 0 "U3" H 5000 3700 50  0000 C CNN
+F 1 "NE5532" H 5000 3600 50  0000 C CNN
+F 2 "" H 5000 3500 50  0001 C CNN
+F 3 "" H 5000 3500 50  0001 C CNN
+    1    5000 3500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Amplifier_Operational:NE5532 U4
+U 1 1 66B1A8F4
+P 7000 4000
+F 0 "U4" H 7000 4200 50  0000 C CNN
+F 1 "NE5532" H 7000 4100 50  0000 C CNN
+F 2 "" H 7000 4000 50  0001 C CNN
+F 3 "" H 7000 4000 50  0001 C CNN
+    1    7000 4000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C1
+U 1 1 66B1A901
+P 1500 2800
+F 0 "C1" H 1550 2900 50  0000 L CNN
+F 1 "10uF" H 1550 2700 50  0000 L CNN
+F 2 "" H 1500 2800 50  0001 C CNN
+F 3 "" H 1500 2800 50  0001 C CNN
+    1    1500 2800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C2
+U 1 1 66B1A902
+P 1500 4300
+F 0 "C2" H 1550 4400 50  0000 L CNN
+F 1 "10uF" H 1550 4200 50  0000 L CNN
+F 2 "" H 1500 4300 50  0001 C CNN
+F 3 "" H 1500 4300 50  0001 C CNN
+    1    1500 4300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C3
+U 1 1 66B1A903
+P 1500 5800
+F 0 "C3" H 1550 5900 50  0000 L CNN
+F 1 "10uF" H 1550 5700 50  0000 L CNN
+F 2 "" H 1500 5800 50  0001 C CNN
+F 3 "" H 1500 5800 50  0001 C CNN
+    1    1500 5800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C4
+U 1 1 66B1A904
+P 3000 2800
+F 0 "C4" H 3050 2900 50  0000 L CNN
+F 1 "10uF" H 3050 2700 50  0000 L CNN
+F 2 "" H 3000 2800 50  0001 C CNN
+F 3 "" H 3000 2800 50  0001 C CNN
+    1    3000 2800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C5
+U 1 1 66B1A905
+P 3000 4300
+F 0 "C5" H 3050 4400 50  0000 L CNN
+F 1 "10uF" H 3050 4200 50  0000 L CNN
+F 2 "" H 3000 4300 50  0001 C CNN
+F 3 "" H 3000 4300 50  0001 C CNN
+    1    3000 4300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C6
+U 1 1 66B1A906
+P 3000 5800
+F 0 "C6" H 3050 5900 50  0000 L CNN
+F 1 "10uF" H 3050 5700 50  0000 L CNN
+F 2 "" H 3000 5800 50  0001 C CNN
+F 3 "" H 3000 5800 50  0001 C CNN
+    1    3000 5800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C7
+U 1 1 66B1A907
+P 1500 7300
+F 0 "C7" H 1550 7400 50  0000 L CNN
+F 1 "10uF" H 1550 7200 50  0000 L CNN
+F 2 "" H 1500 7300 50  0001 C CNN
+F 3 "" H 1500 7300 50  0001 C CNN
+    1    1500 7300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C8
+U 1 1 66B1A908
+P 3000 7300
+F 0 "C8" H 3050 7400 50  0000 L CNN
+F 1 "10uF" H 3050 7200 50  0000 L CNN
+F 2 "" H 3000 7300 50  0001 C CNN
+F 3 "" H 3000 7300 50  0001 C CNN
+    1    3000 7300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C9
+U 1 1 66B1A909
+P 5500 3500
+F 0 "C9" H 5550 3600 50  0000 L CNN
+F 1 "10uF" H 5550 3400 50  0000 L CNN
+F 2 "" H 5500 3500 50  0001 C CNN
+F 3 "" H 5500 3500 50  0001 C CNN
+    1    5500 3500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C10
+U 1 1 66B1A90A
+P 7500 4000
+F 0 "C10" H 7550 4100 50  0000 L CNN
+F 1 "10uF" H 7550 3900 50  0000 L CNN
+F 2 "" H 7500 4000 50  0001 C CNN
+F 3 "" H 7500 4000 50  0001 C CNN
+    1    7500 4000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R1
+U 1 1 66B1A90B
+P 1800 3200
+F 0 "R1" H 1850 3300 50  0000 L CNN
+F 1 "10k" H 1850 3100 50  0000 L CNN
+F 2 "" H 1800 3200 50  0001 C CNN
+F 3 "" H 1800 3200 50  0001 C CNN
+    1    1800 3200
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R2
+U 1 1 66B1A90C
+P 1800 4700
+F 0 "R2" H 1850 4800 50  0000 L CNN
+F 1 "10k" H 1850 4600 50  0000 L CNN
+F 2 "" H 1800 4700 50  0001 C CNN
+F 3 "" H 1800 4700 50  0001 C CNN
+    1    1800 4700
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R3
+U 1 1 66B1A90D
+P 1800 6200
+F 0 "R3" H 1850 6300 50  0000 L CNN
+F 1 "10k" H 1850 6100 50  0000 L CNN
+F 2 "" H 1800 6200 50  0001 C CNN
+F 3 "" H 1800 6200 50  0001 C CNN
+    1    1800 6200
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R4
+U 1 1 66B1A90E
+P 2300 3000
+F 0 "R4" H 2350 3100 50  0000 L CNN
+F 1 "10k" H 2350 2900 50  0000 L CNN
+F 2 "" H 2300 3000 50  0001 C CNN
+F 3 "" H 2300 3000 50  0001 C CNN
+    1    2300 3000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R5
+U 1 1 66B1A90F
+P 2300 4500
+F 0 "R5" H 2350 4600 50  0000 L CNN
+F 1 "10k" H 2350 4400 50  0000 L CNN
+F 2 "" H 2300 4500 50  0001 C CNN
+F 3 "" H 2300 4500 50  0001 C CNN
+    1    2300 4500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R6
+U 1 1 66B1A910
+P 2300 6000
+F 0 "R6" H 2350 6100 50  0000 L CNN
+F 1 "10k" H 2350 5900 50  0000 L CNN
+F 2 "" H 2300 6000 50  0001 C CNN
+F 3 "" H 2300 6000 50  0001 C CNN
+    1    2300 6000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R7
+U 1 1 66B1A911
+P 1800 7500
+F 0 "R7" H 1850 7600 50  0000 L CNN
+F 1 "1M" H 1850 7400 50  0000 L CNN
+F 2 "" H 1800 7500 50  0001 C CNN
+F 3 "" H 1800 7500 50  0001 C CNN
+    1    1800 7500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R8
+U 1 1 66B1A912
+P 1800 7700
+F 0 "R8" H 1850 7800 50  0000 L CNN
+F 1 "10k" H 1850 7600 50  0000 L CNN
+F 2 "" H 1800 7700 50  0001 C CNN
+F 3 "" H 1800 7700 50  0001 C CNN
+    1    1800 7700
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R9
+U 1 1 66B1A913
+P 2300 7500
+F 0 "R9" H 2350 7600 50  0000 L CNN
+F 1 "10k" H 2350 7400 50  0000 L CNN
+F 2 "" H 2300 7500 50  0001 C CNN
+F 3 "" H 2300 7500 50  0001 C CNN
+    1    2300 7500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R10
+U 1 1 66B1A914
+P 3500 2800
+F 0 "R10" H 3550 2900 50  0000 L CNN
+F 1 "10k" H 3550 2700 50  0000 L CNN
+F 2 "" H 3500 2800 50  0001 C CNN
+F 3 "" H 3500 2800 50  0001 C CNN
+    1    3500 2800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R11
+U 1 1 66B1A915
+P 3500 4300
+F 0 "R11" H 3550 4400 50  0000 L CNN
+F 1 "10k" H 3550 4200 50  0000 L CNN
+F 2 "" H 3500 4300 50  0001 C CNN
+F 3 "" H 3500 4300 50  0001 C CNN
+    1    3500 4300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R12
+U 1 1 66B1A916
+P 3500 5800
+F 0 "R12" H 3550 5900 50  0000 L CNN
+F 1 "10k" H 3550 5700 50  0000 L CNN
+F 2 "" H 3500 5800 50  0001 C CNN
+F 3 "" H 3500 5800 50  0001 C CNN
+    1    3500 5800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R13
+U 1 1 66B1A917
+P 3500 7300
+F 0 "R13" H 3550 7400 50  0000 L CNN
+F 1 "10k" H 3550 7200 50  0000 L CNN
+F 2 "" H 3500 7300 50  0001 C CNN
+F 3 "" H 3500 7300 50  0001 C CNN
+    1    3500 7300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R14
+U 1 1 66B1A918
+P 5300 3300
+F 0 "R14" H 5350 3400 50  0000 L CNN
+F 1 "10k" H 5350 3200 50  0000 L CNN
+F 2 "" H 5300 3300 50  0001 C CNN
+F 3 "" H 5300 3300 50  0001 C CNN
+    1    5300 3300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R15
+U 1 1 66B1A919
+P 5300 3700
+F 0 "R15" H 5350 3800 50  0000 L CNN
+F 1 "10k" H 5350 3600 50  0000 L CNN
+F 2 "" H 5300 3700 50  0001 C CNN
+F 3 "" H 5300 3700 50  0001 C CNN
+    1    5300 3700
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R16
+U 1 1 66B1A91A
+P 6000 3500
+F 0 "R16" H 6050 3600 50  0000 L CNN
+F 1 "100R" H 6050 3400 50  0000 L CNN
+F 2 "" H 6000 3500 50  0001 C CNN
+F 3 "" H 6000 3500 50  0001 C CNN
+    1    6000 3500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R17
+U 1 1 66B1A91B
+P 7800 4000
+F 0 "R17" H 7850 4100 50  0000 L CNN
+F 1 "47R" H 7850 3900 50  0000 L CNN
+F 2 "" H 7800 4000 50  0001 C CNN
+F 3 "" H 7800 4000 50  0001 C CNN
+    1    7800 4000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R19
+U 1 1 66B1A91C
+P 7300 3800
+F 0 "R19" H 7350 3900 50  0000 L CNN
+F 1 "20k" H 7350 3700 50  0000 L CNN
+F 2 "" H 7300 3800 50  0001 C CNN
+F 3 "" H 7300 3800 50  0001 C CNN
+    1    7300 3800
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:R R20
+U 1 1 66B1A91D
+P 7300 4200
+F 0 "R20" H 7350 4300 50  0000 L CNN
+F 1 "10k" H 7350 4100 50  0000 L CNN
+F 2 "" H 7300 4200 50  0001 C CNN
+F 3 "" H 7300 4200 50  0001 C CNN
+    1    7300 4200
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:CPOT P1
+U 1 1 66B1A91E
+P 2700 3000
+F 0 "P1" H 2750 3100 50  0000 L CNN
+F 1 "100k" H 2750 2900 50  0000 L CNN
+F 2 "" H 2700 3000 50  0001 C CNN
+F 3 "" H 2700 3000 50  0001 C CNN
+    1    2700 3000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:CPOT P2
+U 1 1 66B1A91F
+P 2700 4500
+F 0 "P2" H 2750 4600 50  0000 L CNN
+F 1 "100k" H 2750 4400 50  0000 L CNN
+F 2 "" H 2700 4500 50  0001 C CNN
+F 3 "" H 2700 4500 50  0001 C CNN
+    1    2700 4500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:CPOT P3
+U 1 1 66B1A920
+P 2700 6000
+F 0 "P3" H 2750 6100 50  0000 L CNN
+F 1 "100k" H 2750 5900 50  0000 L CNN
+F 2 "" H 2700 6000 50  0001 C CNN
+F 3 "" H 2700 6000 50  0001 C CNN
+    1    2700 6000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:CPOT P4
+U 1 1 66B1A921
+P 2700 7500
+F 0 "P4" H 2750 7600 50  0000 L CNN
+F 1 "100k" H 2750 7400 50  0000 L CNN
+F 2 "" H 2700 7500 50  0001 C CNN
+F 3 "" H 2700 7500 50  0001 C CNN
+    1    2700 7500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Connector:Conn_01x03 J1
+U 1 1 66B1A922
+P 1000 7300
+F 0 "J1" H 1050 7400 50  0000 L CNN
+F 1 "Conn_01x03" H 1050 7200 50  0000 L CNN
+F 2 "" H 1000 7300 50  0001 C CNN
+F 3 "" H 1000 7300 50  0001 C CNN
+    1    1000 7300
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Connector:Conn_01x04 J2
+U 1 1 66B1A923
+P 8000 4000
+F 0 "J2" H 8050 4100 50  0000 L CNN
+F 1 "Conn_01x04" H 8050 3900 50  0000 L CNN
+F 2 "" H 8000 4000 50  0001 C CNN
+F 3 "" H 8000 4000 50  0001 C CNN
+    1    8000 4000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L power:+12V #PWR01
+U 1 1 66B1A924
+P 2000 2500
+F 0 "#PWR01" H 2000 2350 50  0001 C CNN
+F 1 "+12V" H 2000 2650 50  0000 C CNN
+F 2 "" H 2000 2500 50  0001 C CNN
+F 3 "" H 2000 2500 50  0001 C CNN
+    1    2000 2500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L power:-12V #PWR02
+U 1 1 66B1A925
+P 2000 3500
+F 0 "#PWR02" H 2000 3350 50  0001 C CNN
+F 1 "-12V" H 2000 3650 50  0000 C CNN
+F 2 "" H 2000 3500 50  0001 C CNN
+F 3 "" H 2000 3500 50  0001 C CNN
+    1    2000 3500
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L power:GND #PWR03
+U 1 1 66B1A926
+P 2000 4000
+F 0 "#PWR03" H 2000 3850 50  0001 C CNN
+F 1 "GND" H 2000 4150 50  0000 C CNN
+F 2 "" H 2000 4000 50  0001 C CNN
+F 3 "" H 2000 4000 50  0001 C CNN
+    1    2000 4000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C11
+U 1 1 66B1A927
+P 2000 5000
+F 0 "C11" H 2050 5100 50  0000 L CNN
+F 1 "100nF" H 2050 4900 50  0000 L CNN
+F 2 "" H 2000 5000 50  0001 C CNN
+F 3 "" H 2000 5000 50  0001 C CNN
+    1    2000 5000
+    1    0    0    -1  
+$EndComp
+
+$Comp
+L Device:C C12
+U 1 1 66B1A928
+P 2000 5200
+F 0 "C12" H 2050 5300 50  0000 L CNN
+F 1 "100nF" H 2050 5100 50  0000 L CNN
+F 2 "" H 2000 5200 50  0001 C CNN
+F 3 "" H 2000 5200 50  0001 C CNN
+    1    2000 5200
+    1    0    0    -1  
+$EndComp
+
+$Wire Notes
+$Wire
+P 1000 7300 1500 7300
+$EndWire
+
+$Wire
+P 1500 2800 1800 2800
+$EndWire
+
+$Wire
+P 1500 4300 1800 4300
+$EndWire
+
+$Wire
+P 1500 5800 1800 5800
+$EndWire
+
+$Wire
+P 1800 2800 2000 2800
+$EndWire
+
+$Wire
+P 1800 4300 2000 4300
+$EndWire
+
+$Wire
+P 1800 5800 2000 5800
+$EndWire
+
+$Wire
+P 1800 7300 2000 7300
+$EndWire
+
+$Wire
+P 2000 2800 2000 3000
+$EndWire
+
+$Wire
+P 2000 4300 2000 4500
+$EndWire
+
+$Wire
+P 2000 5800 2000 6000
+$EndWire
+
+$Wire
+P 2000 7300 2000 7500
+$EndWire
+
+$Wire
+P 2300 3000 2700 3000
+$EndWire
+
+$Wire
+P 2300 4500 2700 4500
+$EndWire
+
+$Wire
+P 2300 6000 2700 6000
+$EndWire
+
+$Wire
+P 2300 7500 2700 7500
+$EndWire
+
+$Wire
+P 2700 3000 3000 3000
+$EndWire
+
+$Wire
+P 2700 4500 3000 4500
+$EndWire
+
+$Wire
+P 2700 6000 3000 6000
+$EndWire
+
+$Wire
+P 2700 7500 3000 7500
+$EndWire
+
+$Wire
+P 3000 2800 3500 2800
+$EndWire
+
+$Wire
+P 3000 4300 3500 4300
+$EndWire
+
+$Wire
+P 3000 5800 3500 5800
+$EndWire
+
+$Wire
+P 3000 7300 3500 7300
+$EndWire
+
+$Wire
+P 3500 2800 5000 2800
+$EndWire
+
+$Wire
+P 3500 4300 5000 4300
+$EndWire
+
+$Wire
+P 3500 5800 5000 5800
+$EndWire
+
+$Wire
+P 3500 7300 5000 7300
+$EndWire
+
+$Wire
+P 5000 2800 5000 3500
+$EndWire
+
+$Wire
+P 5000 4300 5000 3500
+$EndWire
+
+$Wire
+P 5000 5800 5000 3500
+$EndWire
+
+$Wire
+P 5000 7300 5000 3500
+$EndWire
+
+$Wire
+P 5300 3500 5500 3500
+$EndWire
+
+$Wire
+P 5500 3500 6000 3500
+$EndWire
+
+$Wire
+P 6000 3500 7000 3500
+$EndWire
+
+$Wire
+P 7000 3500 7000 4000
+$EndWire
+
+$Wire
+P 7300 4000 7500 4000
+$EndWire
+
+$Wire
+P 7500 4000 7800 4000
+$EndWire
+
+$Wire
+P 7800 4000 8000 4000
+$EndWire
+
+$Wire
+P 2000 2500 2000 5000
+$EndWire
+
+$Wire
+P 2000 3500 2000 5200
+$EndWire
+
+$Wire
+P 2000 5000 2000 4000
+$EndWire
+
+$Wire
+P 2000 5200 2000 4000
+$EndWire
+
+$Text Label 1000 2800 50  0000 L Input
+IN1
+$EndText
+
+$Text Label 1000 4300 50  0000 L Input
+IN2
+$EndText
+
+$Text Label 1000 5800 50  0000 L Input
+IN3
+$EndText
+
+$Text Label 6500 3500 50  0000 L Output
+LINE_OUT
+$EndText
+
+$EndSCHEMATC
