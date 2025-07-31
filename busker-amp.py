@@ -42,14 +42,30 @@ wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 mix = pyo64.Mix([dry, wet, wah]).out()       # Main effects mix
 
 amplitude = None
-leds_on = False
+leds_on = True
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
 #fx = {'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
 fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'chorus': 0, 'reverb':0, 'distort': 0, 'wah': 0}
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
-vu_leds  = LEDBarGraph(14, 16, 25, 6, 5, 27)
+led_gr1 = "BOARD16"
+led_gr2 = "BOARD15"
+led_gr3 = "BOARD36"
+led_gr4 = "BOARD31"
+
+led_yel1 = "BOARD29"
+led_yel2 = "BOARD22"
+led_yel3 = "BOARD18"
+
+led_red1 = "BOARD10"
+led_red2 = "BOARD8"
+
+vu_leds = LEDBarGraph(led_gr1, led_gr2, led_gr3, led_gr4,
+                      led_yel1, led_yel2, led_yel3,
+                      led_red1, led_red2)
+vu_leds.off()
+vu_leds.value = 0
 bt_led = LED("BOARD11")
 
 
@@ -58,11 +74,11 @@ def RMS_meter_callback(*args):
     # set VU max to highest value, but back off highest value over time
     if args[0] > max_RMS:
         max_RMS = args[0]
-        VU_factor = 20/max_RMS # number of VU bars is 20
+        VU_factor = 9/max_RMS # number of VU bars is 20
     elif max_RMS > 0.05:  
         max_RMS -= 0.005
     if leds_on:
-        vu_leds.value = min([1,args[0]*VU_factor/20])
+        vu_leds.value = min([1,args[0]*VU_factor/9])
 
 def inputLoop():
     global amplitude, loop_rec, loop_play, loop_file, silence
