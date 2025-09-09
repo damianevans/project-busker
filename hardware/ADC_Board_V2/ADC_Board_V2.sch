@@ -1,0 +1,402 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Analog_ADC:MCP3008 U1
+U 1 1 68C0A016
+P 5580 3220
+F 0 "U1" H 5580 3901 50  0000 C CNN
+F 1 "MCP3008" H 5580 3810 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_Socket_LongPads" H 5680 3320 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21295d.pdf" H 5680 3320 50  0001 C CNN
+	1    5580 3220
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Female pwr1
+U 1 1 68C0AA50
+P 6650 2150
+F 0 "pwr1" H 6678 2126 50  0000 L CNN
+F 1 "Conn_01x02_Female" H 6678 2035 50  0000 L CNN
+F 2 "Connector_JST:JST_XH_B2B-XH-AM_1x02_P2.50mm_Vertical" H 6650 2150 50  0001 C CNN
+F 3 "~" H 6650 2150 50  0001 C CNN
+	1    6650 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR0101
+U 1 1 68C0B370
+P 6650 2410
+F 0 "#PWR0101" H 6650 2160 50  0001 C CNN
+F 1 "GNDD" H 6654 2255 50  0000 C CNN
+F 2 "" H 6650 2410 50  0001 C CNN
+F 3 "" H 6650 2410 50  0001 C CNN
+	1    6650 2410
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 2410 6650 2250
+Wire Wire Line
+	6650 2250 6450 2250
+$Comp
+L power:+3.3V #PWR0102
+U 1 1 68C0BE17
+P 6660 2040
+F 0 "#PWR0102" H 6660 1890 50  0001 C CNN
+F 1 "+3.3V" H 6675 2213 50  0000 C CNN
+F 2 "" H 6660 2040 50  0001 C CNN
+F 3 "" H 6660 2040 50  0001 C CNN
+	1    6660 2040
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6660 2040 6660 2150
+Wire Wire Line
+	5780 2720 5780 2150
+Wire Wire Line
+	5780 2150 6450 2150
+Connection ~ 6450 2150
+Wire Wire Line
+	6450 2150 6660 2150
+Wire Wire Line
+	5640 3820 5640 3940
+Wire Wire Line
+	5640 3940 6450 3940
+Wire Wire Line
+	6450 3940 6450 2250
+Wire Wire Line
+	5640 3820 5780 3820
+Connection ~ 6450 2250
+Wire Wire Line
+	6180 3100 6180 3120
+Wire Wire Line
+	6180 3200 6180 3220
+Wire Wire Line
+	6180 3320 6180 3300
+Wire Wire Line
+	6180 3400 6180 3420
+Connection ~ 6180 3200
+Wire Wire Line
+	6180 3200 6170 3200
+Connection ~ 6550 3400
+Connection ~ 6550 3300
+Wire Wire Line
+	6550 3400 6180 3400
+Wire Wire Line
+	6560 3400 6550 3400
+Wire Wire Line
+	6550 3300 6560 3300
+Wire Wire Line
+	6180 3300 6550 3300
+$Comp
+L Connector:Conn_01x04_Male J9
+U 1 1 68C0E3B1
+P 6750 3200
+F 0 "J9" H 6722 3174 50  0000 R CNN
+F 1 "Data" H 6722 3083 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Horizontal" H 6750 3200 50  0001 C CNN
+F 3 "~" H 6750 3200 50  0001 C CNN
+	1    6750 3200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6180 3100 6550 3100
+Connection ~ 6550 3100
+Wire Wire Line
+	6550 3100 6570 3100
+Wire Wire Line
+	6180 3200 6550 3200
+Connection ~ 6550 3200
+Wire Wire Line
+	6550 3200 6560 3200
+$Comp
+L Connector:Conn_01x03_Female J1
+U 1 1 68C1223C
+P 4130 2720
+F 0 "J1" H 4022 3005 50  0000 C CNN
+F 1 "Pot 01" H 4022 2914 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 4130 2720 50  0001 C CNN
+F 3 "~" H 4130 2720 50  0001 C CNN
+	1    4130 2720
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4980 2920 4980 2720
+Wire Wire Line
+	4980 2720 4330 2720
+Wire Wire Line
+	4480 2150 4480 2620
+Wire Wire Line
+	4480 2620 4330 2620
+Connection ~ 5780 2150
+Wire Wire Line
+	6450 2250 4660 2250
+Wire Wire Line
+	4660 2250 4660 2820
+Wire Wire Line
+	4660 2820 4330 2820
+$Comp
+L Connector:Conn_01x03_Female J2
+U 1 1 68C16CEB
+P 3580 2730
+F 0 "J2" H 3472 3015 50  0000 C CNN
+F 1 "Pot 02" H 3472 2924 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 3580 2730 50  0001 C CNN
+F 3 "~" H 3580 2730 50  0001 C CNN
+	1    3580 2730
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4480 2150 3890 2150
+Wire Wire Line
+	3890 2150 3890 2630
+Wire Wire Line
+	3890 2630 3780 2630
+Connection ~ 4480 2150
+Wire Wire Line
+	4660 2250 4030 2250
+Wire Wire Line
+	4030 2250 4030 2830
+Wire Wire Line
+	4030 2830 3780 2830
+Connection ~ 4660 2250
+Wire Wire Line
+	3780 2730 3950 2730
+Wire Wire Line
+	3950 2730 3950 3020
+Wire Wire Line
+	3950 3020 4980 3020
+$Comp
+L Connector:Conn_01x03_Female J3
+U 1 1 68C19BBC
+P 3070 2730
+F 0 "J3" H 2962 3015 50  0000 C CNN
+F 1 "Pot 03" H 2962 2924 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 3070 2730 50  0001 C CNN
+F 3 "~" H 3070 2730 50  0001 C CNN
+	1    3070 2730
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3890 2150 3390 2150
+Wire Wire Line
+	3390 2150 3390 2630
+Wire Wire Line
+	3390 2630 3270 2630
+Connection ~ 3890 2150
+Wire Wire Line
+	4030 2250 3510 2250
+Wire Wire Line
+	3510 2250 3510 2830
+Wire Wire Line
+	3510 2830 3270 2830
+Connection ~ 4030 2250
+Wire Wire Line
+	4980 3120 3400 3120
+Wire Wire Line
+	3400 3120 3400 2730
+Wire Wire Line
+	3400 2730 3270 2730
+$Comp
+L Connector:Conn_01x03_Female J4
+U 1 1 68C1D0B4
+P 2560 2740
+F 0 "J4" H 2452 3025 50  0000 C CNN
+F 1 "Pot 04" H 2452 2934 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 2560 2740 50  0001 C CNN
+F 3 "~" H 2560 2740 50  0001 C CNN
+	1    2560 2740
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3390 2150 2900 2150
+Wire Wire Line
+	2900 2150 2900 2640
+Wire Wire Line
+	2900 2640 2760 2640
+Connection ~ 3390 2150
+Wire Wire Line
+	3510 2250 2960 2250
+Wire Wire Line
+	2960 2250 2960 2840
+Wire Wire Line
+	2760 2840 2960 2840
+Connection ~ 3510 2250
+Wire Wire Line
+	4980 3220 2850 3220
+Wire Wire Line
+	2850 3220 2850 2740
+Wire Wire Line
+	2850 2740 2760 2740
+$Comp
+L Connector:Conn_01x03_Female J5
+U 1 1 68C22B25
+P 1950 2760
+F 0 "J5" H 1842 3045 50  0000 C CNN
+F 1 "Pot 05" H 1842 2954 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 1950 2760 50  0001 C CNN
+F 3 "~" H 1950 2760 50  0001 C CNN
+	1    1950 2760
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 2150 2300 2150
+Wire Wire Line
+	2300 2150 2300 2660
+Wire Wire Line
+	2300 2660 2150 2660
+Connection ~ 2900 2150
+Wire Wire Line
+	2960 2250 2430 2250
+Wire Wire Line
+	2430 2250 2430 2860
+Wire Wire Line
+	2430 2860 2150 2860
+Connection ~ 2960 2250
+Wire Wire Line
+	4980 3320 2300 3320
+Wire Wire Line
+	2300 3320 2300 2760
+Wire Wire Line
+	2300 2760 2150 2760
+$Comp
+L Connector:Conn_01x03_Female J6
+U 1 1 68C298F7
+P 1440 2780
+F 0 "J6" H 1332 3065 50  0000 C CNN
+F 1 "Pot 06" H 1332 2974 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 1440 2780 50  0001 C CNN
+F 3 "~" H 1440 2780 50  0001 C CNN
+	1    1440 2780
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2300 2150 1770 2150
+Wire Wire Line
+	1770 2150 1770 2680
+Wire Wire Line
+	1770 2680 1640 2680
+Connection ~ 2300 2150
+Wire Wire Line
+	2430 2250 1860 2250
+Wire Wire Line
+	1860 2250 1860 2880
+Wire Wire Line
+	1860 2880 1640 2880
+Connection ~ 2430 2250
+Wire Wire Line
+	4980 3420 1780 3420
+Wire Wire Line
+	1780 3420 1780 2780
+Wire Wire Line
+	1780 2780 1640 2780
+$Comp
+L Connector:Conn_01x03_Female J7
+U 1 1 68C31065
+P 1220 3520
+F 0 "J7" H 1112 3805 50  0000 C CNN
+F 1 "Pot 07" H 1112 3714 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 1220 3520 50  0001 C CNN
+F 3 "~" H 1220 3520 50  0001 C CNN
+	1    1220 3520
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1770 2150 1340 2150
+Wire Wire Line
+	1340 2150 1340 3140
+Wire Wire Line
+	1340 3150 1660 3150
+Wire Wire Line
+	1660 3150 1660 3420
+Wire Wire Line
+	1660 3420 1420 3420
+Connection ~ 1770 2150
+Wire Wire Line
+	1860 2880 1860 3640
+Wire Wire Line
+	1860 3640 1420 3640
+Wire Wire Line
+	1420 3640 1420 3620
+Connection ~ 1860 2880
+Wire Wire Line
+	4990 3520 4980 3520
+Wire Wire Line
+	4980 3520 1420 3520
+Connection ~ 4980 3520
+$Comp
+L Connector:Conn_01x03_Female J8
+U 1 1 68C3F46C
+P 1250 4080
+F 0 "J8" H 1142 4365 50  0000 C CNN
+F 1 "Pot 08" H 1142 4274 50  0000 C CNN
+F 2 "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical" H 1250 4080 50  0001 C CNN
+F 3 "~" H 1250 4080 50  0001 C CNN
+	1    1250 4080
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1340 3140 1020 3140
+Wire Wire Line
+	1020 3140 1020 3720
+Wire Wire Line
+	1020 3720 1600 3720
+Wire Wire Line
+	1600 3720 1600 3980
+Wire Wire Line
+	1600 3980 1450 3980
+Connection ~ 1340 3140
+Wire Wire Line
+	1340 3140 1340 3150
+Wire Wire Line
+	1860 3640 1860 4190
+Wire Wire Line
+	1860 4190 1450 4190
+Wire Wire Line
+	1450 4190 1450 4180
+Connection ~ 1860 3640
+Wire Wire Line
+	4980 3620 2750 3620
+Wire Wire Line
+	2750 3620 2750 4080
+Wire Wire Line
+	2750 4080 1450 4080
+Wire Wire Line
+	5640 3940 5480 3940
+Wire Wire Line
+	5480 3940 5480 3820
+Connection ~ 5640 3940
+Wire Wire Line
+	5480 2720 5480 2450
+Wire Wire Line
+	4480 2150 5480 2150
+Connection ~ 5480 2150
+Wire Wire Line
+	5480 2150 5780 2150
+$Comp
+L power:+3.3V #PWR0103
+U 1 1 68C7025C
+P 5480 2450
+F 0 "#PWR0103" H 5480 2300 50  0001 C CNN
+F 1 "+3.3V" H 5495 2623 50  0000 C CNN
+F 2 "" H 5480 2450 50  0001 C CNN
+F 3 "" H 5480 2450 50  0001 C CNN
+	1    5480 2450
+	1    0    0    -1  
+$EndComp
+Connection ~ 5480 2450
+Wire Wire Line
+	5480 2450 5480 2150
+$EndSCHEMATC
