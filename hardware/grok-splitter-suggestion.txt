@@ -1,0 +1,12 @@
+J1(Mono In) --- C1(+|-)(10uF) --- R4(10k to GND) --- pin3(IC1A)
+                                 pin2 --- pin1 --- C2(+|-)(10uF) --- J2(Mono Out)
+                                            |
+                                            +--- VR1(10k single pot)
+                                                  | Wiper --- C5(+|-)(10uF) ---+--- R5(10k to GND) --- pin5(IC1B)
+                                                                     |         pin6 --- R1(10k to GND), R2(47k to pin7)
+                                                                     |         pin7 --- C3(+|-)(220uF) --- R7(47Ω) --- J3(Tip: L)
+                                                                     +--- R6(10k to GND) --- pin3(IC2A)
+                                                                           pin2 --- R1b(10k to GND), R3(47k to pin1)
+                                                                           pin1 --- C4(+|-)(220uF) --- R8(47Ω) --- J3(Ring: R)
+J3(Sleeve) --- GND
+Power: IC1/IC2: pin8(+V), pin4(-V); C6(100nF, +V to GND), C7(100nF, -V to GND).
