@@ -1,0 +1,12 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C1";"C_Disc_D5.0mm_W2.5mm_P5.00mm";1;"150nF";;;
+2;"REF**,REF**";"PinHeader_1x03_P2.54mm_Vertical";2;"PinHeader_1x03_P2.54mm_Vertical";;;
+3;"REF**";"PinHeader_1x02_P2.54mm_Vertical";1;"PinHeader_1x02_P2.54mm_Vertical";;;
+4;"U1";"DIP-8_W7.62mm";1;"NE5532";;;
+5;"RV1";"Potentiometer_Alps_RK163_Single_Horizontal";1;"10K";;;
+6;"R8";"R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal";1;"100";;;
+7;"R7,R5,R4,R3,R2,R1";"R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal";6;"10K";;;
+8;"R6";"R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal";1;"270";;;
+9;"Cb1";"C_Disc_D3.0mm_W1.6mm_P2.50mm";1;"100nF";;;
+10;"C4,C3";"CP_Radial_D6.3mm_P2.50mm";2;"10uF";;;
+11;"C2";"C_Disc_D3.0mm_W2.0mm_P2.50mm";1;"150nF";;;
