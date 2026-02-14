@@ -49,24 +49,26 @@ fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'chorus': 0, 'reverb':0
 data_lock = threading.Lock()
 max_RMS = 0
 VU_factor = 1
-led_gr1 = "BOARD16"
-led_gr2 = "BOARD15"
-led_gr3 = "BOARD36"
-led_gr4 = "BOARD31"
+led_gr1 = "BOARD16" # GPIO23
+led_gr2 = "BOARD15" # GPIO22
+led_gr3 = "BOARD36" # GPIO 16
+led_gr4 = "BOARD31" #GPIO 6
 
-led_yel1 = "BOARD29"
-led_yel2 = "BOARD22"
-led_yel3 = "BOARD18"
+led_yel1 = "BOARD29" #GPIO 5
+led_yel2 = "BOARD22" #GPIO 25
+led_yel3 = "BOARD18" #GPIO 24
 
-led_red1 = "BOARD10"
-led_red2 = "BOARD8"
+led_red1 = "BOARD10" #GPIO15 / RX
+led_red2 = "BOARD8" #GPIO14 / TX
 
 vu_leds = LEDBarGraph(led_gr1, led_gr2, led_gr3, led_gr4,
                       led_yel1, led_yel2, led_yel3,
                       led_red1, led_red2)
 vu_leds.off()
 vu_leds.value = 0
-bt_led = LED("BOARD11")
+bt_led = LED("BOARD11") # GPIO 17
+looper_led_red = LED("BOARD7") #GPIO4
+looper_led_green = LED("BOARD13") #GPIO27
 
 
 def RMS_meter_callback(*args):
