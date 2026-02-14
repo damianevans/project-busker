@@ -101,7 +101,10 @@ def inputLoop():
         elif address == "/data/looperstate":
             localLooperState = args[0].upper()  
             print(f"Looper state changed to: {localLooperState}")
-            if localLooperState == "IDLE":    
+            if localLooperState == "IDLE":
+                # reset red/green leds
+                looper_led_red.off()
+                looper_led_green.off()
                 # Stop everything
                 if loop_play.isPlaying():
                     loop_play.stop()    
@@ -111,6 +114,8 @@ def inputLoop():
                     
             elif localLooperState == "RECORDING":
                 print("Starting recording...")
+                looper_led_red.on()
+                looper_led_green.off()
                 # Stop playback and start recording
                 if loop_play.isPlaying():
                     loop_play.stop()
@@ -125,6 +130,8 @@ def inputLoop():
                 print("Recording active")
                 
             elif localLooperState == "PLAYBACK":
+                looper_led_red.off()
+                looper_led_green.on()
                 # Stop recording if active
                 if loop_rec is not None:
                     print("Stopping recording...")
@@ -141,6 +148,9 @@ def inputLoop():
                 print("Starting playback...")
                 loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
             elif localLooperState == "STOPPED":
+                #red led off, green blink
+                looper_led_red.off()
+                looper_led_green.blink()
                 # Stop everything but keep recorded content
                 if loop_play.isPlaying():
                     loop_play.stop()    
