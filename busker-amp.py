@@ -205,6 +205,8 @@ async def pedalLoop():
     global looperState
     global oldLooperState
     bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
+    looper_led_red.off()
+    looper_led_green.off()
     looperState = oldLooperState = "IDLE"
     ble_client = ESP32BLEClient("ESP32")
     #print("Connecting to ESP32...")
