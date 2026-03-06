@@ -13,8 +13,9 @@ s.setInOutDevice(1)
 s.boot()
 s.start()
 
-audio    = pyo64.Input()
-dry      = pyo64.Input()
+audio    = pyo64.Input(chnl=0)      # Left channel - Guitar with effects
+dry      = pyo64.Input(chnl=0)      # Left channel input
+vu_input = pyo64.Input(chnl=1)      # Right channel - Standalone VU meter
 
 cdir        = os.path.dirname(os.path.abspath(__file__))
 silence     = cdir+'/silent.wav'
@@ -41,14 +42,14 @@ wah      = pyo64.ButBP(wet, freq=wahfq, q=30)
 
 mix = pyo64.Mix([dry, wet, wah]).out()       # Main effects mix
 
-amplitude = None
+amplitude_right = None
 leds_on = True
 #eq = {'bass': 1., 'mid': 1., 'treb': 1.}
 #fx = {'wet': 1., 'dry': 1., 'delay': 1., 'reverb':1., 'distort': 1., 'wah': 1.}
 fx = {'bass': 0, 'mid': 0, 'treb': 0,'wet': 0, 'dry': 0, 'chorus': 0, 'reverb':0, 'distort': 0, 'wah': 0}
 data_lock = threading.Lock()
-max_RMS = 0
-VU_factor = 1
+max_RMS_right = 0
+VU_factor_right = 1
 led_gr1 = "BOARD16" # GPIO23
 led_gr2 = "BOARD15" # GPIO22
 led_gr3 = "BOARD36" # GPIO 16
@@ -71,22 +72,33 @@ looper_led_red = LED("BOARD7") #GPIO4
 looper_led_green = LED("BOARD13") #GPIO27
 
 
-def RMS_meter_callback(*args):
-    global max_RMS, VU_factor, meter
-    # set VU max to highest value, but back off highest value over time
-    if args[0] > max_RMS:
-        max_RMS = args[0]
-        VU_factor = 9/max_RMS # number of VU bars is 20
-    elif max_RMS > 0.05:  
-        max_RMS -= 0.005
-    if leds_on:
-        vu_leds.value = min([1,args[0]*VU_factor/9])
+def vu_meter_loop():
+    """Dedicated thread for VU meter LED updates (Right channel monitoring)"""
+    global amplitude_right, max_RMS_right, VU_factor_right
+    amplitude_right = pyo64.RMS(vu_input)
+    
+    while True:
+        if amplitude_right is not None:
+            rms_value = amplitude_right.get(all=True)
+            if rms_value:
+                current_rms = rms_value[0]
+                with data_lock:
+                    # set VU max to highest value, but back off highest value over time
+                    if current_rms > max_RMS_right:
+                        max_RMS_right = current_rms
+                        VU_factor_right = 9/max_RMS_right  # number of VU bars is 9
+                    elif max_RMS_right > 0.05:  
+                        max_RMS_right -= 0.005
+                    if leds_on:
+                        vu_leds.value = min([1, current_rms * VU_factor_right / 9])
+        time.sleep(0.05)  # ~20Hz update rate for smooth visual feedback
+
 
 def inputLoop():
-    global amplitude, loop_rec, loop_play, loop_file, silence
-    amplitude = pyo64.RMS(mix, function=RMS_meter_callback)
+    global loop_rec, loop_play, loop_file, silence
+    
     def getDataMessage(address, *args):
-        global amplitude, loop_rec, loop_play, loop_file, silence
+        global loop_rec, loop_play, loop_file, silence
         if address == "/data/eq":
             #with data_lock:
             fx['bass'], fx['mid'], fx['treb'], fx['wet'], fx['dry'], fx['chorus'], fx['reverb'], fx['distort'], fx['wah'] = args
@@ -98,187 +110,5 @@ def inputLoop():
             reverb.size     =     fx['reverb']
             distort.drive   =     fx['distort']
             wah.mul         =     fx['wah']
-        elif address == "/data/looperstate":
-            localLooperState = args[0].upper()  
-            print(f"Looper state changed to: {localLooperState}")
-            if localLooperState == "IDLE":
-                # reset red/green leds
-                looper_led_red.off()
-                looper_led_green.off()
-                # Stop everything
-                if loop_play.isPlaying():
-                    loop_play.stop()    
-                if loop_rec is not None:
-                    loop_rec.stop()
-                    loop_rec = None
-                    
-            elif localLooperState == "RECORDING":
-                print("Starting recording...")
-                looper_led_red.on()
-                looper_led_green.off()
-                # Stop playback and start recording
-                if loop_play.isPlaying():
-                    loop_play.stop()
-                if loop_rec is not None:
-                    loop_rec.stop()
-                
-                # Clear the loop file and start fresh recording
-                shutil.copy(silence, loop_file)
-                
-                # Create new Record object and start recording
-                loop_rec = pyo64.Record(mix, filename=loop_file, fileformat=0, sampletype=1)
-                print("Recording active")
-                
-            elif localLooperState == "PLAYBACK":
-                looper_led_red.off()
-                looper_led_green.on()
-                # Stop recording if active
-                if loop_rec is not None:
-                    print("Stopping recording...")
-                    loop_rec.stop()
-                    loop_rec = None
-                    # FIX 2: Give more time for the file to be written and flushed
-                    time.sleep(0.2)  # Increased from 0.1 to 0.2
-                
-                # Stop current player and create new one with updated file
-                if loop_play.isPlaying():
-                    loop_play.stop()
-       
-                # Recreate the player with the new recorded content
-                print("Starting playback...")
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol,).out()
-            elif localLooperState == "STOPPED":
-                #red led off, green blink
-                looper_led_red.off()
-                looper_led_green.blink()
-                # Stop everything but keep recorded content
-                if loop_play.isPlaying():
-                    loop_play.stop()    
-
-                if loop_rec is not None:
-                    loop_rec.stop()
-                    loop_rec = None
-                print("Playback stopped")
-                
-            elif localLooperState == "ERASE":
-                # Stop everything and clear the loop
-                if loop_play.isPlaying():
-                    loop_play.stop()
-                if loop_rec is not None:
-                    loop_rec.stop()
-                    loop_rec = None
-                
-                # Clear the loop file
-                shutil.copy(silence, loop_file)
-                
-                # Recreate player with empty file
-                loop_play = pyo64.SfPlayer(loop_file, loop=True, mul=loop_vol)
-                loop_play.stop()
-                print("Loop erased")
-
-    recv = pyo64.OscDataReceive(port=9900, address="/data/*", function=getDataMessage)
-    
-    while(True):
-        time.sleep(0.05)  # Sleep to avoid busy waiting
-            
-
-def controlLoop():
-    numlines = 8
-
-    
-    pots = [MCP3008(channel=n) for n in range(numlines)]  
-    vals = [0] * numlines
-    sender = pyo64.OscDataSend(types="fffffffff", port = 9900, address = "/data/eq", host = "localhost")
-
-    while True:
-        with data_lock:
-            new_vals = [1- int(pots[n].value*100)/100 for n in range(numlines)]
-            for i, nv in enumerate(new_vals):
-                if abs(vals[i]-nv) > 0.1:
-                    vals[i] = nv
-
-        wet = vals[0]
-        bass = vals[1]*2
-        mid = vals[2]*2
-        treb = vals[3]*2
-        dry = 1 - wet
-        chorus = vals[4]
-        reverb = vals[5]
-        distort = vals[6]**0.05
-        wah = vals[7]*30
-
- 
-        sender.send([bass, mid, treb, wet, dry, chorus, reverb, distort, wah])
-        time.sleep(0.05)
-
-async def pedalLoop():
-    global looperState
-    global oldLooperState
-    bt_led.blink(on_time=0.5, off_time=0.75)  # Blink to indicate start
-    looper_led_red.off()
-    looper_led_green.off()
-    looperState = oldLooperState = "IDLE"
-    ble_client = ESP32BLEClient("ESP32")
-    #print("Connecting to ESP32...")
-    loopSender = pyo64.OscDataSend(types="s", port = 9900, address = "/data/looperstate", host = "localhost")
-    try:
-        # Connect to ESP32
-        if not await ble_client.connect():
-            print("Failed to connect to ESP32. Try re-starting the device.")
-            return
-        
-        # Main loop
-        while ble_client.connected:
-            try:
-                await asyncio.sleep(0.5)
-                bt_led.on()  # Turn on the LED to indicate connection
-                looperState = ble_client.get_latest_looperstate()
-                if looperState != oldLooperState:
-                    # flash the LED to indicate state change
-                    bt_led.blink(on_time=0.1, off_time=0.1, n=2)
-                    await ble_client.send_message("RECV:" + looperState)
-                    oldLooperState = looperState
-                    loopSender.send([looperState])  # Send the state to the server
-                # Optional: Send a test message every 30 seconds
-                # await ble_client.send_message("Hello from Pi!")
-                
-            except KeyboardInterrupt:
-                print("\nShutting down...")
-                break
-                
-    except Exception as e:
-        print(f"Application error: {e}")
-        
-    finally:
-        await ble_client.disconnect()
-        bt_led.off()
-
-async def run_pedal_loop():
-   global pedal_loop_task
-   pedal_loop_task = asyncio.create_task(pedalLoop())  # Start pedalLoop initially
-   while True:
-       await asyncio.sleep(0.07)  # Keep the event loop running
-
-
-if __name__ == "__main__":
-    # Create threads
-    thread1 = threading.Thread(target=inputLoop)
-    thread2 = threading.Thread(target=controlLoop)
-    # thread3 = threading.Thread(
-    #     target=display_loop, 
-    #     args=(fx, looperState, oldLooperState, data_lock), 
-    #     daemon=True
-    # )
-
-    thread1.start()
-    thread2.start()
-    # thread3.start()
-    try:
-        asyncio.run(run_pedal_loop())
-        # Join the threads to the main thread to keep them running
-    except KeyboardInterrupt:
-        print("Main thread stopped")          
-    finally:
-        pedal_loop_task.cancel()
-        thread1.join()
-        thread2.join()
+        elif address == "/data/looper
+
