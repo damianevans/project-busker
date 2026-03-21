@@ -1542,12 +1542,6 @@
 		(uuid "2d6bc9d4-8b18-49a1-80e9-9310732016ed")
 	)
 	(junction
-		(at 174.752 95.758)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "45d6d6c6-a20b-4599-b49c-3e0134e734d2")
-	)
-	(junction
 		(at 117.856 106.172)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1634,6 +1628,16 @@
 			(type default)
 		)
 		(uuid "076e2734-d495-423e-86b0-5b798fb5d487")
+	)
+	(wire
+		(pts
+			(xy 184.15 100.33) (xy 184.15 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "07a52f3c-8ac3-4660-85e9-7e172407ed03")
 	)
 	(wire
 		(pts
@@ -1734,16 +1738,6 @@
 			(type default)
 		)
 		(uuid "285452df-2169-43c8-90f8-eef8edd12694")
-	)
-	(wire
-		(pts
-			(xy 174.752 99.568) (xy 174.752 95.758)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "28c4402e-f89c-4369-ad98-9150e981308a")
 	)
 	(wire
 		(pts
@@ -1914,6 +1908,16 @@
 			(type default)
 		)
 		(uuid "66fceae5-7df6-4409-9736-5c408c62e5c5")
+	)
+	(wire
+		(pts
+			(xy 184.15 100.33) (xy 178.562 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bfb33a6-5acb-43f7-8f71-0a863a7c1438")
 	)
 	(wire
 		(pts
@@ -2137,16 +2141,6 @@
 	)
 	(wire
 		(pts
-			(xy 178.562 99.568) (xy 174.752 99.568)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c2fb5e6c-de5f-44ed-bb96-97d4a42de911")
-	)
-	(wire
-		(pts
 			(xy 63.754 83.312) (xy 85.344 83.312)
 		)
 		(stroke
@@ -2187,6 +2181,16 @@
 	)
 	(wire
 		(pts
+			(xy 184.15 96.52) (xy 186.69 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd5930e7-7cd9-4d3f-9d63-4fae4e579cf9")
+	)
+	(wire
+		(pts
 			(xy 199.644 45.212) (xy 187.706 45.212)
 		)
 		(stroke
@@ -2194,6 +2198,16 @@
 			(type default)
 		)
 		(uuid "cda27585-a0ff-42a5-ba9b-2eef762df091")
+	)
+	(wire
+		(pts
+			(xy 178.562 100.33) (xy 178.562 99.568)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d01538f7-640e-4dd9-92c8-68aefdaadecc")
 	)
 	(wire
 		(pts
@@ -2264,6 +2278,16 @@
 			(type default)
 		)
 		(uuid "e5bc4a62-7183-4a90-b15b-680f40be73a3")
+	)
+	(wire
+		(pts
+			(xy 186.69 95.758) (xy 186.69 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb8ef8d9-2fb8-4617-b805-05015a361685")
 	)
 	(wire
 		(pts
@@ -3291,7 +3315,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W2.0mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm"
 			(at 87.63 91.6432 0)
 			(effects
 				(font
@@ -3357,7 +3381,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W2.0mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm"
 			(at 87.63 79.9592 0)
 			(effects
 				(font
