@@ -265,8 +265,6 @@ Wire Wire Line
 	4640 3110 3750 3110
 Connection ~ 4640 3240
 Wire Wire Line
-	3660 4180 3660 3900
-Wire Wire Line
 	4640 4180 4940 4180
 Wire Wire Line
 	4640 4120 4640 4180
@@ -319,8 +317,6 @@ F 3 "~" H 6820 2070 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	7390 1780 6820 1780
-Wire Wire Line
-	6350 1780 6350 1800
 Connection ~ 7390 1780
 Wire Wire Line
 	6820 1920 6820 1780
@@ -347,14 +343,10 @@ Wire Wire Line
 Connection ~ 6820 2470
 Wire Wire Line
 	6820 2470 7390 2470
-Wire Wire Line
-	8810 3350 8720 3350
 Text GLabel 9000 3350 0    50   Output ~ 0
 Gnd
 Text GLabel 8970 3230 0    50   Output ~ 0
 Out
-Wire Wire Line
-	8480 3230 8800 3230
 Connection ~ 7390 2470
 Wire Wire Line
 	8040 2470 7390 2470
@@ -395,19 +387,6 @@ F 3 "" H 8050 1830 50  0001 C CNN
 	1    8050 1830
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector:XLR3_Switched J1
-U 1 1 680F40CD
-P 2810 3590
-F 0 "J1" H 2810 3863 50  0000 C CNN
-F 1 "XLR3_Switched" H 2810 3954 50  0000 C CNN
-F 2 "" H 2810 3690 50  0001 C CNN
-F 3 " ~" H 2810 3690 50  0001 C CNN
-	1    2810 3590
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	3660 3890 3110 3890
 Wire Wire Line
 	3450 3110 2810 3110
 Wire Wire Line
@@ -421,10 +400,30 @@ Wire Wire Line
 Wire Wire Line
 	3360 3570 3450 3570
 Wire Wire Line
-	2950 3590 3110 3590
+	8970 3230 8480 3230
 Wire Wire Line
-	3110 3890 3110 3590
+	9000 3350 8720 3350
 Wire Wire Line
-	3110 3590 3100 3590
-Connection ~ 3110 3590
+	3660 3890 3660 4180
+Wire Wire Line
+	2950 3890 2950 3760
+Wire Wire Line
+	2950 3890 3660 3890
+Wire Wire Line
+	6350 1800 6350 1780
+Wire Wire Line
+	3110 3590 3110 3760
+Wire Wire Line
+	3110 3760 2950 3760
+$Comp
+L Connector:XLR3_Switched J1
+U 1 1 680F40CD
+P 2810 3590
+F 0 "J1" H 2810 3863 50  0000 C CNN
+F 1 "XLR3_Switched" H 2810 3954 50  0000 C CNN
+F 2 "Connector_Audio:Jack_XLR-6.35mm_Neutrik_NCJ6FA-V-0_Vertical" H 2810 3690 50  0001 C CNN
+F 3 " ~" H 2810 3690 50  0001 C CNN
+	1    2810 3590
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC
