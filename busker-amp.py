@@ -360,7 +360,7 @@ async def pedalLoop():
     """
     global looperState, oldLooperState
     
-    bt_led.blink(on_time=0.5, off_time=0.75)  # Indicate startup
+    bt_led.blink(on_time=0.5, off_time=0.75, n=None, background= True)  # Indicate startup
     looper_led_red.off()
     looper_led_green.off()
     looperState = oldLooperState = "IDLE"
@@ -424,8 +424,7 @@ async def run_pedal_loop():
 
 if __name__ == "__main__":
     logger.info("=== Busker Amp Starting ===")
-    logger.info(f"Audio device: {s.getOutputDevice()}")
-    
+        
     # Create and start threads
     thread1 = threading.Thread(target=inputLoop, name="InputLoop", daemon=False)
     thread2 = threading.Thread(target=controlLoop, name="ControlLoop", daemon=False)
